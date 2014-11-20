@@ -22,8 +22,10 @@ var RESERVED_DATA_KEYS = [
 var RESERVED_METHODS_KEYS = ['constructor'].concat(LIFECYCLE_METHODS_KEYS);
 
 function Illya() {
+    /*! illya.js: イリヤたんprpr */
 }
 
+Illya.Vue = Vue;
 extendClassMember(Illya, Vue);
 
 var p = Illya.prototype = Vue.prototype;
