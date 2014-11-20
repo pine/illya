@@ -1,5 +1,6 @@
 illya.js
 --------
+[![Build Status](https://travis-ci.org/pine613/illyajs.svg?branch=master)](https://travis-ci.org/pine613/illyajs)
 
 This project is pre-alpha phase.
 
