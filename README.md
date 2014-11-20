@@ -3,6 +3,7 @@ illya.js
 [![Build Status](https://travis-ci.org/pine613/illyajs.svg?branch=master)](https://travis-ci.org/pine613/illyajs)
 
 This project is pre-alpha phase.
+illya.js is based on [Vue.js](https://github.com/yyx990803/vue).
 
 ## Example
 
