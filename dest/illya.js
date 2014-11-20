@@ -1,18 +1,12 @@
-/**
- * Vue.js v0.11.0
- * (c) 2014 Evan You
- * Released under the MIT License.
- */
-
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
 		define(factory);
 	else if(typeof exports === 'object')
-		exports["Vue"] = factory();
+		exports["Illya"] = factory();
 	else
-		root["Vue"] = factory();
+		root["Illya"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -60,7 +54,125 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var Vue = __webpack_require__(1);
+
+	var LIFECYCLE_METHODS_KEYS = [
+	    'created', 'beforeCompile', 'compiled', 'ready',
+	    'attached', 'detached', 'beforeDestroy', 'destroyed'
+	];
+
+	var RESERVED_DATA_KEYS = [
+	    // Data
+	    'el',
+	    
+	    // DOM
+	    'template', 'replace',
+	    
+	    // Assets
+	    'components',
+
+	    // Others
+	    'mixins'
+	];
+
+	var RESERVED_METHODS_KEYS = ['constructor'].concat(LIFECYCLE_METHODS_KEYS);
+
+	function Illya() {
+	}
+
+	extendClassMember(Illya, Vue);
+
+	var p = Illya.prototype = Vue.prototype;
+
+	p.track = function (element) {
+	    var options = {
+	        // Data
+	        data: trackData(this),
+	        computed: {},
+	        methods: trackMethods(this),
+
+	        // DOM
+	        template: this.template,
+	        replace: this.replace,
+
+	        // Assets
+	        components: this.components,
+
+	        // Others
+	        mixins: this.mixins
+	    };
+
+	    trackLifecycle(this, options);
+
+	    if (!element) {
+	        element = this.el;
+	    }
+
+	    this.constructor.options = Vue.options;
+	    this._init(options);
+	    
+	    if (element) {
+	        this.$mount(element);
+	    }
+	};
+
+	function trackData(obj) {
+	    var keys = Object.keys(obj);
+	    var data = {};
+
+	    for (var i = 0; i < keys.length; ++i) {
+	        if (RESERVED_DATA_KEYS.indexOf(keys[i]) < 0) {
+	            data[keys[i]] = obj[keys[i]];
+	        }
+	    }
+
+	    return data;
+	}
+
+	function trackMethods(obj) {
+	    var proto = Object.getPrototypeOf(obj);
+	    var keys = Object.keys(proto);
+	    var methods = {};
+
+	    for (var i = 0; i < keys.length; ++i) {
+	        var descriptor = Object.getOwnPropertyDescriptor(proto, keys[i]);
+
+	        if (typeof descriptor.value === 'function') {
+	            if (RESERVED_METHODS_KEYS.indexOf(keys[i]) < 0) {
+	                methods[keys[i]] = descriptor.value;
+	            }
+	        }
+	    }
+
+	    return methods;
+	}
+
+	function trackLifecycle(obj, options) {
+	    var proto = Object.getPrototypeOf(obj);
+	    var keys = LIFECYCLE_METHODS_KEYS;
+
+	    for (var i = 0; i < keys.length; ++i) {
+	        if (typeof proto[keys[i]] === 'function') {
+	            options[keys[i]] = proto[keys[i]];
+	        }
+	    }
+	}  
+
+	function extendClassMember(dest, src) {
+	    var keys = Object.keys(src);
+	    
+	    for (var i = 0; i < keys.length; ++i) {
+	        dest[keys[i]] = src[keys[i]];
+	    }
+	}
+
+	module.exports = Illya;
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(2)
 	var extend = _.extend
 
 	/**
@@ -85,7 +197,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Mixin global API
 	 */
 
-	extend(Vue, __webpack_require__(2))
+	extend(Vue, __webpack_require__(3))
 
 	/**
 	 * Vue and every constructor that extends Vue has an
@@ -97,8 +209,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	Vue.options = {
-	  directives  : __webpack_require__(8),
-	  filters     : __webpack_require__(9),
+	  directives  : __webpack_require__(9),
+	  filters     : __webpack_require__(10),
 	  partials    : {},
 	  transitions : {},
 	  components  : {}
@@ -128,42 +240,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Mixin internal instance methods
 	 */
 
-	extend(p, __webpack_require__(10))
 	extend(p, __webpack_require__(11))
 	extend(p, __webpack_require__(12))
 	extend(p, __webpack_require__(13))
+	extend(p, __webpack_require__(14))
 
 	/**
 	 * Mixin public API methods
 	 */
 
-	extend(p, __webpack_require__(3))
 	extend(p, __webpack_require__(4))
 	extend(p, __webpack_require__(5))
 	extend(p, __webpack_require__(6))
 	extend(p, __webpack_require__(7))
+	extend(p, __webpack_require__(8))
 
 	module.exports = _.Vue = Vue
-
-/***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var lang   = __webpack_require__(14)
-	var extend = lang.extend
-
-	extend(exports, lang)
-	extend(exports, __webpack_require__(15))
-	extend(exports, __webpack_require__(16))
-	extend(exports, __webpack_require__(17))
-	extend(exports, __webpack_require__(18))
 
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var mergeOptions = __webpack_require__(19)
+	var lang   = __webpack_require__(15)
+	var extend = lang.extend
+
+	extend(exports, lang)
+	extend(exports, __webpack_require__(16))
+	extend(exports, __webpack_require__(17))
+	extend(exports, __webpack_require__(18))
+	extend(exports, __webpack_require__(19))
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(2)
+	var mergeOptions = __webpack_require__(20)
 
 	/**
 	 * Expose useful internals
@@ -171,7 +283,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.util       = _
 	exports.nextTick   = _.nextTick
-	exports.config     = __webpack_require__(20)
+	exports.config     = __webpack_require__(21)
 
 	/**
 	 * Each instance constructor, including Vue, has a unique
@@ -297,15 +409,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	createAssetRegisters(exports)
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var Watcher = __webpack_require__(21)
-	var Path = __webpack_require__(41)
-	var textParser = __webpack_require__(42)
-	var dirParser = __webpack_require__(43)
-	var expParser = __webpack_require__(44)
+	var _ = __webpack_require__(2)
+	var Watcher = __webpack_require__(22)
+	var Path = __webpack_require__(42)
+	var textParser = __webpack_require__(43)
+	var dirParser = __webpack_require__(44)
+	var expParser = __webpack_require__(45)
 	var filterRE = /[^|]\|[^|]/
 
 	/**
@@ -460,11 +572,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var transition = __webpack_require__(45)
+	var _ = __webpack_require__(2)
+	var transition = __webpack_require__(46)
 
 	/**
 	 * Append instance to target
@@ -674,10 +786,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 
 	/**
 	 * Listen on the given `event` with `fn`.
@@ -855,10 +967,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 
 	/**
 	 * Create a child instance that prototypally inehrits
@@ -913,11 +1025,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var compile = __webpack_require__(46)
+	var _ = __webpack_require__(2)
+	var compile = __webpack_require__(47)
 
 	/**
 	 * Set instance target element and kick off the compilation
@@ -1063,37 +1175,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// manipulation directives
-	exports.text       = __webpack_require__(22)
-	exports.html       = __webpack_require__(23)
-	exports.attr       = __webpack_require__(24)
-	exports.show       = __webpack_require__(25)
-	exports['class']   = __webpack_require__(26)
-	exports.el         = __webpack_require__(27)
-	exports.ref        = __webpack_require__(28)
-	exports.cloak      = __webpack_require__(29)
-	exports.style      = __webpack_require__(30)
-	exports.partial    = __webpack_require__(31)
-	exports.transition = __webpack_require__(32)
-
-	// event listener directives
-	exports.on         = __webpack_require__(33)
-	exports.model      = __webpack_require__(48)
-
-	// child vm directives
-	exports.component  = __webpack_require__(34)
-	exports.repeat     = __webpack_require__(35)
-	exports['if']      = __webpack_require__(36)
-	exports['with']    = __webpack_require__(37)
-
-/***/ },
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	// manipulation directives
+	exports.text       = __webpack_require__(23)
+	exports.html       = __webpack_require__(24)
+	exports.attr       = __webpack_require__(25)
+	exports.show       = __webpack_require__(26)
+	exports['class']   = __webpack_require__(27)
+	exports.el         = __webpack_require__(28)
+	exports.ref        = __webpack_require__(29)
+	exports.cloak      = __webpack_require__(30)
+	exports.style      = __webpack_require__(31)
+	exports.partial    = __webpack_require__(32)
+	exports.transition = __webpack_require__(33)
+
+	// event listener directives
+	exports.on         = __webpack_require__(34)
+	exports.model      = __webpack_require__(49)
+
+	// child vm directives
+	exports.component  = __webpack_require__(35)
+	exports.repeat     = __webpack_require__(36)
+	exports['if']      = __webpack_require__(37)
+	exports['with']    = __webpack_require__(38)
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(2)
 
 	/**
 	 * Stringify value.
@@ -1213,13 +1325,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Install special array filters
 	 */
 
-	_.extend(exports, __webpack_require__(38))
+	_.extend(exports, __webpack_require__(39))
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var mergeOptions = __webpack_require__(19)
+	var mergeOptions = __webpack_require__(20)
 
 	/**
 	 * The main init sequence. This is called for every
@@ -1297,10 +1409,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 	var inDoc = _.inDoc
 
 	/**
@@ -1424,12 +1536,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var Observer = __webpack_require__(49)
-	var Binding = __webpack_require__(39)
+	var _ = __webpack_require__(2)
+	var Observer = __webpack_require__(50)
+	var Binding = __webpack_require__(40)
 
 	/**
 	 * Setup the scope of an instance, which contains:
@@ -1646,13 +1758,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var Directive = __webpack_require__(40)
-	var compile = __webpack_require__(46)
-	var transclude = __webpack_require__(47)
+	var _ = __webpack_require__(2)
+	var Directive = __webpack_require__(41)
+	var compile = __webpack_require__(47)
+	var transclude = __webpack_require__(48)
 
 	/**
 	 * Transclude, compile and link element.
@@ -1722,7 +1834,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1901,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1980,10 +2092,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var config = __webpack_require__(20)
+	var config = __webpack_require__(21)
 
 	/**
 	 * Check if a node is in the document.
@@ -2161,10 +2273,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(18)
+	var _ = __webpack_require__(19)
 
 	/**
 	 * Resolve read & write filters for a vm instance. The
@@ -2238,10 +2350,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var config = __webpack_require__(20)
+	var config = __webpack_require__(21)
 
 	/**
 	 * Enable debug utilities. The enableDebug() function and
@@ -2293,10 +2405,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 	var extend = _.extend
 
 	/**
@@ -2527,7 +2639,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
@@ -2611,14 +2723,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	})
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var config = __webpack_require__(20)
-	var Observer = __webpack_require__(49)
-	var expParser = __webpack_require__(44)
-	var Batcher = __webpack_require__(50)
+	var _ = __webpack_require__(2)
+	var config = __webpack_require__(21)
+	var Observer = __webpack_require__(50)
+	var expParser = __webpack_require__(45)
+	var Batcher = __webpack_require__(51)
 
 	var batcher = new Batcher()
 	var uid = 0
@@ -2831,10 +2943,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Watcher
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 
 	module.exports = {
 
@@ -2851,11 +2963,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var templateParser = __webpack_require__(51)
+	var _ = __webpack_require__(2)
+	var templateParser = __webpack_require__(52)
 
 	module.exports = {
 
@@ -2893,7 +3005,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// xlink
@@ -2930,10 +3042,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var transition = __webpack_require__(45)
+	var transition = __webpack_require__(46)
 
 	module.exports = function (value) {
 	  var el = this.el
@@ -2943,10 +3055,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 	var addClass = _.addClass
 	var removeClass = _.removeClass
 
@@ -2966,7 +3078,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
@@ -2984,10 +3096,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 
 	module.exports = {
 
@@ -3013,10 +3125,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var config = __webpack_require__(20)
+	var config = __webpack_require__(21)
 
 	module.exports = {
 
@@ -3030,7 +3142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var prefixes = ['-webkit-', '-moz-', '-ms-']
@@ -3081,12 +3193,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var templateParser = __webpack_require__(51)
-	var transition = __webpack_require__(45)
+	var _ = __webpack_require__(2)
+	var templateParser = __webpack_require__(52)
+	var transition = __webpack_require__(46)
 
 	module.exports = {
 
@@ -3141,7 +3253,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
@@ -3158,10 +3270,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 
 	module.exports = {
 
@@ -3222,11 +3334,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var templateParser = __webpack_require__(51)
+	var _ = __webpack_require__(2)
+	var templateParser = __webpack_require__(52)
 
 	module.exports = {
 
@@ -3383,17 +3495,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 	var isObject = _.isObject
-	var textParser = __webpack_require__(42)
-	var expParser = __webpack_require__(44)
-	var templateParser = __webpack_require__(51)
-	var compile = __webpack_require__(46)
-	var transclude = __webpack_require__(47)
-	var mergeOptions = __webpack_require__(19)
+	var textParser = __webpack_require__(43)
+	var expParser = __webpack_require__(45)
+	var templateParser = __webpack_require__(52)
+	var compile = __webpack_require__(47)
+	var transclude = __webpack_require__(48)
+	var mergeOptions = __webpack_require__(20)
 	var uid = 0
 
 	module.exports = {
@@ -3895,13 +4007,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var compile = __webpack_require__(46)
-	var templateParser = __webpack_require__(51)
-	var transition = __webpack_require__(45)
+	var _ = __webpack_require__(2)
+	var compile = __webpack_require__(47)
+	var templateParser = __webpack_require__(52)
+	var transition = __webpack_require__(46)
 
 	module.exports = {
 
@@ -3968,11 +4080,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var Watcher = __webpack_require__(21)
+	var _ = __webpack_require__(2)
+	var Watcher = __webpack_require__(22)
 
 	module.exports = {
 
@@ -4020,11 +4132,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var Path = __webpack_require__(41)
+	var _ = __webpack_require__(2)
+	var Path = __webpack_require__(42)
 
 	/**
 	 * Filter filter for v-repeat
@@ -4112,7 +4224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var uid = 0
@@ -4167,14 +4279,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Binding
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var config = __webpack_require__(20)
-	var Watcher = __webpack_require__(21)
-	var textParser = __webpack_require__(42)
-	var expParser = __webpack_require__(44)
+	var _ = __webpack_require__(2)
+	var config = __webpack_require__(21)
+	var Watcher = __webpack_require__(22)
+	var textParser = __webpack_require__(43)
+	var expParser = __webpack_require__(45)
 
 	/**
 	 * A directive links a DOM element with a piece of data,
@@ -4374,11 +4486,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Directive
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var Cache = __webpack_require__(52)
+	var _ = __webpack_require__(2)
+	var Cache = __webpack_require__(53)
 	var pathCache = new Cache(1000)
 	var identRE = /^[$_a-zA-Z]+[\w$]*$/
 
@@ -4679,12 +4791,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Cache = __webpack_require__(52)
-	var config = __webpack_require__(20)
-	var dirParser = __webpack_require__(43)
+	var Cache = __webpack_require__(53)
+	var config = __webpack_require__(21)
+	var dirParser = __webpack_require__(44)
 	var regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g
 	var cache, tagRE, htmlRE, firstChar, lastChar
 
@@ -4862,11 +4974,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var Cache = __webpack_require__(52)
+	var _ = __webpack_require__(2)
+	var Cache = __webpack_require__(53)
 	var cache = new Cache(1000)
 	var argRE = /^[^\{\?]+$|^'[^']*'$|^"[^"]*"$/
 	var filterTokenRE = /[^\s'"]+|'[^']+'|"[^"]+"/g
@@ -5026,12 +5138,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var Path = __webpack_require__(41)
-	var Cache = __webpack_require__(52)
+	var _ = __webpack_require__(2)
+	var Path = __webpack_require__(42)
+	var Cache = __webpack_require__(53)
 	var expressionCache = new Cache(1000)
 
 	var keywords =
@@ -5257,12 +5369,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.pathTestRE = pathTestRE
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var applyCSSTransition = __webpack_require__(53)
-	var applyJSTransition = __webpack_require__(54)
+	var _ = __webpack_require__(2)
+	var applyCSSTransition = __webpack_require__(54)
+	var applyJSTransition = __webpack_require__(55)
 
 	/**
 	 * Append with transition.
@@ -5413,14 +5525,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var config = __webpack_require__(20)
-	var textParser = __webpack_require__(42)
-	var dirParser = __webpack_require__(43)
-	var templateParser = __webpack_require__(51)
+	var _ = __webpack_require__(2)
+	var config = __webpack_require__(21)
+	var textParser = __webpack_require__(43)
+	var dirParser = __webpack_require__(44)
+	var templateParser = __webpack_require__(52)
 
 	/**
 	 * Compile a template and return a reusable composite link
@@ -5955,11 +6067,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var templateParser = __webpack_require__(51)
+	var _ = __webpack_require__(2)
+	var templateParser = __webpack_require__(52)
 
 	/**
 	 * Process an element or a DocumentFragment based on a
@@ -6123,16 +6235,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 
 	var handlers = {
-	  _default: __webpack_require__(55),
-	  radio: __webpack_require__(56),
-	  select: __webpack_require__(57),
-	  checkbox: __webpack_require__(58)
+	  _default: __webpack_require__(56),
+	  radio: __webpack_require__(57),
+	  select: __webpack_require__(58),
+	  checkbox: __webpack_require__(59)
 	}
 
 	module.exports = {
@@ -6184,15 +6296,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var config = __webpack_require__(20)
-	var Binding = __webpack_require__(39)
-	var arrayMethods = __webpack_require__(59)
+	var _ = __webpack_require__(2)
+	var config = __webpack_require__(21)
+	var Binding = __webpack_require__(40)
+	var arrayMethods = __webpack_require__(60)
 	var arrayKeys = Object.getOwnPropertyNames(arrayMethods)
-	__webpack_require__(60)
+	__webpack_require__(61)
 
 	var uid = 0
 
@@ -6425,10 +6537,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 
 	/**
 	 * The Batcher maintains a job queue to be run
@@ -6495,11 +6607,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Batcher
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var Cache = __webpack_require__(52)
+	var _ = __webpack_require__(2)
+	var Cache = __webpack_require__(53)
 	var templateCache = new Cache(100)
 
 	/**
@@ -6722,7 +6834,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6839,10 +6951,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Cache
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 	var addClass = _.addClass
 	var removeClass = _.removeClass
 	var transDurationProp = _.transitionProp + 'Duration'
@@ -7033,7 +7145,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7081,10 +7193,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 
 	module.exports = {
 
@@ -7203,10 +7315,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 
 	module.exports = {
 
@@ -7234,11 +7346,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
-	var Watcher = __webpack_require__(21)
+	var _ = __webpack_require__(2)
+	var Watcher = __webpack_require__(22)
 
 	module.exports = {
 
@@ -7406,10 +7518,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 
 	module.exports = {
 
@@ -7436,10 +7548,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 	var arrayProto = Array.prototype
 	var arrayMethods = Object.create(arrayProto)
 
@@ -7531,10 +7643,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = arrayMethods
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(1)
+	var _ = __webpack_require__(2)
 	var objProto = Object.prototype
 
 	/**
