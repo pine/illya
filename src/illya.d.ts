@@ -24,3 +24,7 @@ declare class Illya {
     public track(element: HTMLElement): void;
     public track(selector: string): void;
 }
+
+declare module "illya" {
+    export = Illya;
+}

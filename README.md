@@ -56,3 +56,18 @@ class App extends Illya {
 var app = new App();
 app.track('body');
 ```
+
+## Usage
+### For Browserify, webpack users
+
+```
+$ npm install illya
+```
+
+```ts
+import Illya = require('illya');
+
+class App extens Illya {
+    ...
+}
+```
