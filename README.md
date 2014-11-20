@@ -68,7 +68,7 @@ $ npm install illya
 ```ts
 import Illya = require('illya');
 
-class App extens Illya {
+class App extends Illya {
     ...
 }
 ```
