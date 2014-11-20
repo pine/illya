@@ -11,6 +11,10 @@ class App extends Illya {
     get name() {
         return this.firstName + ' ' + this.lastName;
     }
+    
+    ready() {
+        console.log('ready');
+    }
 }
 
 var app = new App();

@@ -45,6 +45,11 @@ class App extends Illya {
     hello() {
         alert('Hello ' + this.name);
     }
+    
+    // Lifecycle
+    ready() {
+        console.log('ready');
+    }
 }
 
 var app = new App();
