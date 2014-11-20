@@ -20,7 +20,7 @@ This project is pre-alpha phase.
     </p>
     <p>Your name: {{ name }}</p>
     
-    <button type="button"v-on="click: hello">Hello</button>
+    <button type="button" v-on="click: hello">Hello</button>
     
     <script src="illya.js"></script>
     <script src="app.js"></script>
