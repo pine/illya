@@ -54,7 +54,7 @@ p.track = function (element) {
         element = this.el;
     }
 
-    this.constructor.options = Vue.options;
+    this.constructor.options = Illya.options;
     this._init(options);
     
     if (element) {
@@ -102,7 +102,7 @@ function trackLifecycle(obj, options) {
             options[keys[i]] = proto[keys[i]];
         }
     }
-}  
+}
 
 function extendClassMember(dest, src) {
     var keys = Object.keys(src);
