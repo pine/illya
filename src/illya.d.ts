@@ -1,3 +1,4 @@
+// https://github.com/borisyankov/DefinitelyTyped/blob/master/jquery/jquery.d.ts
 interface JQuery {
 }
 
@@ -7,7 +8,7 @@ declare module Illya {
     interface Options {
 
         // Assets
-        components: { [key: string]: any }
+        components: { [key: string]: typeof Illya }
     }
 
     export class Directive {

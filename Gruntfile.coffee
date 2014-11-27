@@ -1,14 +1,21 @@
+webpack = require('webpack')
+
 module.exports = (grunt) ->
+    webpackBanner = grunt.file.read('webpack.banner.txt')
+    
     grunt.initConfig
         pkg: grunt.file.readJSON 'package.json'
         webpack:
             main:
                 entry: './src/illya.js'
                 output:
-                    path: './dest/'
+                    path: './dist/'
                     filename: 'illya.js'
                     library: 'Illya'
                     libraryTarget: 'umd'
+                plugins: [
+                    new webpack.BannerPlugin(webpackBanner, raw: true)
+                    ]
         
         typescript:
             example:
@@ -20,9 +27,12 @@ module.exports = (grunt) ->
                     declaration: false
         
         uglify:
+            options:
+                banner: webpackBanner
+                
             main:
                 files:
-                    './dest/illya.min.js': './dest/illya.js'
+                    './dist/illya.min.js': './dist/illya.js'
         
         jshint:
             main: ['./src/**/*.js']
@@ -48,8 +58,8 @@ module.exports = (grunt) ->
                 grunt.config ['typescript', 'example', 'src'], [filepath]
                 return ['typescript']
         
-    grunt.registerTask 'default', ['jshint', 'webpack']
-    grunt.registerTask 'build', ['jshint', 'webpack', 'uglify']
+    grunt.registerTask 'default', ['concurrent:main']
+    grunt.registerTask 'build', ['concurrent:main', 'uglify']
     grunt.registerTask 'watch', ['esteWatch']
     
     require('load-grunt-tasks')(grunt)

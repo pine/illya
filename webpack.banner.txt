@@ -1,0 +1,14 @@
+/*!
+ * illya.js
+ * (C) 2014 Pine Mizune
+ * MIT-License
+ * --------------------------------------------------------
+ * Vue.js - (c) 2014 Evan You
+ * clone - (C) 2011-2014 Paul Vorbach <paul@vorba.ch>
+ * es6-weak-map - (C) 2013 Mariusz Nowak (www.medikoo.com)
+ * d - (C) 2013 Mariusz Nowak (www.medikoo.com)
+ * es5-ext - (C) 2011 Mariusz Nowak (www.medikoo.com)
+ * es6-iterator - (C) 2013 Mariusz Nowak (www.medikoo.com)
+ * es6-symbol - (C) 2013 Mariusz Nowak (www.medikoo.com)
+ * Underscore.js 1.7.0 - (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
