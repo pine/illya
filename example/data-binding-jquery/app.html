@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
+    <title>Data binding by jQuery</title>
     <meta charset="utf-8" />
 </head>
 <body>
@@ -8,11 +9,10 @@
         <input type="text" size="20" v-model="firstName" />
         <input type="text" size="20" v-model="lastName" />
     </p>
-    <p>Your name: {{ name }}</p>
+    <p>Your name: {{ fullName }}</p>
     
-    <button type="button" v-on="click: hello">Hello</button>
-    
-    <script src="../dest/illya.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="../../dest/illya.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

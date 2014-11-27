@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>Data binding by jQuery</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <form action="javascript: void 0" v-on="submit: insert()">
+        <input type="text" v-model="memo" />
+        <input type="button" value="追加" />
+    </form>
+
+    <div v-repeat="memos">
+        <p>{{ $value }}</p>
+    </div>
+
+    <script src="../../dest/illya.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
