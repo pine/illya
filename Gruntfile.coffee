@@ -45,6 +45,7 @@ module.exports = (grunt) ->
         esteWatch:
             options:
                 dirs: ['src/**/', 'example/**/']
+                livereload: false
             js: (filepath) ->
                 if filepath.match(/^src\//)
                     grunt.config ['jshint', 'main'], [filepath]

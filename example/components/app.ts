@@ -27,4 +27,3 @@ class App extends Illya {
 
 var app = new App();
 app.track('body');
-

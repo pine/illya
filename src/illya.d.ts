@@ -17,6 +17,24 @@ declare module Illya {
         protected unbind();
     }
 
+    export class Router extends Illya {
+        path: string;
+        params: { [key: string]: string };
+
+        map(path: string): Router.Route;
+        root(path: string): void;
+        rescue(fn: () => void): void;
+        listen(): void;
+    }
+
+    module Router {
+        export class Route {
+            to(fn: () => void): Route;
+            enter(fn: () => void): Route;
+            enter(fns: Array<() => void>): Route;
+            exit(fn: () => void): Route;
+        }
+    }
 }
 
 declare class Illya {
