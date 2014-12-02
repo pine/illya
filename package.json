@@ -15,10 +15,11 @@
   ],
   "dependencies": {
     "clone": "^0.1.18",
-    "underscore": "^1.7.0",
-    "vue": "~0.11.0",
     "es6-weak-map": "^0.1.2",
-    "pathjs-amd": "^0.10.0"
+    "pathjs-amd": "^0.10.0",
+    "typescript-after-extends": "*",
+    "underscore": "^1.7.0",
+    "vue": "~0.11.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

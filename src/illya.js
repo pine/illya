@@ -1,6 +1,7 @@
 var Vue = require('vue');
 var clone = require('clone');
 var _ = require('underscore');
+var afterExtends = require('typescript-after-extends');
 
 /*jshint -W079 */
 // Redefinition of 'WeakMap'.
@@ -31,8 +32,7 @@ Illya.Vue = Vue;
 utility.mixin(Illya, Vue);
 utility.mixin(Illya.prototype, Vue.prototype);
 
-utility.extendAfter(router.Router, Illya);
-Illya.Router = router.Router;
+Illya.Router = afterExtends(router.Router, Illya);
 Illya._ = _;
 
 module.exports = Illya;

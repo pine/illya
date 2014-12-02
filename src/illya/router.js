@@ -6,7 +6,8 @@ function Router() {
 
     this.path = null;
     this.params = {};
-
+    // TODO: hashPrefix
+    
     Path.rescue(wrapRescureFunction(this));
 }
 
@@ -24,6 +25,7 @@ Router.prototype.rescue = function (fn) {
 
 Router.prototype.listen = function () {
     Path.listen();
+    // TODO: html5Mode
 };
 
 function RouteProxy(router, route) {

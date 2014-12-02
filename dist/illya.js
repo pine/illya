@@ -68,13 +68,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Vue = __webpack_require__(8);
-	var clone = __webpack_require__(5);
-	var _ = __webpack_require__(6);
+	var Vue = __webpack_require__(9);
+	var clone = __webpack_require__(6);
+	var _ = __webpack_require__(7);
+	var afterExtends = __webpack_require__(4);
 
 	/*jshint -W079 */
 	// Redefinition of 'WeakMap'.
-	var WeakMap = __webpack_require__(4);
+	var WeakMap = __webpack_require__(5);
 	/*jshint +W079 */
 
 	var track = __webpack_require__(1);
@@ -101,8 +102,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	utility.mixin(Illya, Vue);
 	utility.mixin(Illya.prototype, Vue.prototype);
 
-	utility.extendAfter(router.Router, Illya);
-	Illya.Router = router.Router;
+	Illya.Router = afterExtends(router.Router, Illya);
 	Illya._ = _;
 
 	module.exports = Illya;
@@ -111,11 +111,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6);
-	var clone = __webpack_require__(5);
-	var Vue = __webpack_require__(8);
+	var _ = __webpack_require__(7);
+	var clone = __webpack_require__(6);
+	var Vue = __webpack_require__(9);
 
-	var element = __webpack_require__(7);
+	var element = __webpack_require__(8);
 
 	var LIFECYCLE_METHODS_KEYS = [
 	    'created', 'beforeCompile', 'compiled', 'ready',
@@ -253,8 +253,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6);
-	var clone = __webpack_require__(5);
+	var _ = __webpack_require__(7);
+	var clone = __webpack_require__(6);
 
 	function mixin(dest, src) {
 	    _.each(Object.keys(src), function (key) {
@@ -300,15 +300,16 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6);
-	var Path = __webpack_require__(11);
+	var _ = __webpack_require__(7);
+	var Path = __webpack_require__(13);
 
 	function Router() {
 	    /*! illya.js - Router */
 
 	    this.path = null;
 	    this.params = {};
-
+	    // TODO: hashPrefix
+	    
 	    Path.rescue(wrapRescureFunction(this));
 	}
 
@@ -326,6 +327,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	Router.prototype.listen = function () {
 	    Path.listen();
+	    // TODO: html5Mode
 	};
 
 	function RouteProxy(router, route) {
@@ -382,14 +384,20 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	module.exports = __webpack_require__(9)() ?
-			WeakMap : __webpack_require__(10);
-
+	module.exports = __webpack_require__(12);
 
 /***/ },
 /* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(10)() ?
+			WeakMap : __webpack_require__(11);
+
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {'use strict';
@@ -522,10 +530,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return new c();
 	};
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27).Buffer))
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.7.0
@@ -1946,7 +1954,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	function isJQuery(jq) {
@@ -1979,10 +1987,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 	var extend = _.extend
 
 	/**
@@ -2007,7 +2015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Mixin global API
 	 */
 
-	extend(Vue, __webpack_require__(13))
+	extend(Vue, __webpack_require__(15))
 
 	/**
 	 * Vue and every constructor that extends Vue has an
@@ -2019,8 +2027,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	Vue.options = {
-	  directives  : __webpack_require__(19),
-	  filters     : __webpack_require__(20),
+	  directives  : __webpack_require__(21),
+	  filters     : __webpack_require__(22),
 	  partials    : {},
 	  transitions : {},
 	  components  : {}
@@ -2050,25 +2058,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Mixin internal instance methods
 	 */
 
-	extend(p, __webpack_require__(21))
-	extend(p, __webpack_require__(22))
 	extend(p, __webpack_require__(23))
 	extend(p, __webpack_require__(24))
+	extend(p, __webpack_require__(25))
+	extend(p, __webpack_require__(26))
 
 	/**
 	 * Mixin public API methods
 	 */
 
-	extend(p, __webpack_require__(14))
-	extend(p, __webpack_require__(15))
 	extend(p, __webpack_require__(16))
 	extend(p, __webpack_require__(17))
 	extend(p, __webpack_require__(18))
+	extend(p, __webpack_require__(19))
+	extend(p, __webpack_require__(20))
 
 	module.exports = _.Vue = Vue
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2088,19 +2096,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var setPrototypeOf    = __webpack_require__(69)
-	  , object            = __webpack_require__(67)
-	  , value             = __webpack_require__(68)
-	  , d                 = __webpack_require__(63)
-	  , getIterator       = __webpack_require__(65)
-	  , forOf             = __webpack_require__(66)
-	  , toStringTagSymbol = __webpack_require__(64).toStringTag
-	  , isNative          = __webpack_require__(26)
+	var setPrototypeOf    = __webpack_require__(71)
+	  , object            = __webpack_require__(69)
+	  , value             = __webpack_require__(70)
+	  , d                 = __webpack_require__(56)
+	  , getIterator       = __webpack_require__(67)
+	  , forOf             = __webpack_require__(68)
+	  , toStringTagSymbol = __webpack_require__(57).toStringTag
+	  , isNative          = __webpack_require__(28)
 
 	  , isArray = Array.isArray, defineProperty = Object.defineProperty, random = Math.random
 	  , hasOwnProperty = Object.prototype.hasOwnProperty
@@ -2169,7 +2177,68 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mixin
+	 */
+	function mixin (self, other, withoutProto) {
+	    for (var key in other) {
+	        if (other.hasOwnProperty(key)) {
+	            if (key !== 'prototype' || !withoutProto) {
+	                var d = Object.getOwnPropertyDescriptor(other, key);
+	                Object.defineProperty(self, key, d);
+	            }
+	        }
+	    }
+	}
+
+	/**
+	 * Create named class with extends
+	 */
+	function createNamedClass (name, klass, baseKlass, superFunc) {
+	    if (!superFunc) {
+	        superFunc = function () {
+	            baseKlass.call(this);
+	        };
+	    }
+	    
+	    return new Function(
+	        'klass', 'superFunc',
+	        'return function ' + name + ' () {' +
+	            'superFunc.apply(this, arguments);' +
+	            'klass.apply(this, arguments);' +
+	        '};'
+	        )(klass, superFunc);
+	}
+
+	/**
+	 * Create prototype
+	 */
+	function createPrototype (klass, baseKlass, newKlass) {
+	    var __ = function () { this.constructor = newKlass; };
+
+	    __.prototype = baseKlass.prototype;
+	    mixin(__.prototype, klass.prototype);
+
+	    return new __();
+	}
+
+	/**
+	 * TypeScript extends later
+	 */
+	function afterExtends (klass, baseKlass, superFunc) {
+	    var newKlass = createNamedClass(klass.name, klass, baseKlass, superFunc);
+	    newKlass.prototype = createPrototype(klass, baseKlass, newKlass);
+	    
+	    return newKlass;
+	}
+
+	module.exports = afterExtends;
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* global define */
@@ -2403,24 +2472,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var lang   = __webpack_require__(27)
+	var lang   = __webpack_require__(29)
 	var extend = lang.extend
 
 	extend(exports, lang)
-	extend(exports, __webpack_require__(28))
-	extend(exports, __webpack_require__(29))
 	extend(exports, __webpack_require__(30))
 	extend(exports, __webpack_require__(31))
+	extend(exports, __webpack_require__(32))
+	extend(exports, __webpack_require__(33))
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var mergeOptions = __webpack_require__(32)
+	var _ = __webpack_require__(14)
+	var mergeOptions = __webpack_require__(34)
 
 	/**
 	 * Expose useful internals
@@ -2428,7 +2497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.util       = _
 	exports.nextTick   = _.nextTick
-	exports.config     = __webpack_require__(33)
+	exports.config     = __webpack_require__(35)
 
 	/**
 	 * Each instance constructor, including Vue, has a unique
@@ -2554,15 +2623,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	createAssetRegisters(exports)
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var Watcher = __webpack_require__(34)
-	var Path = __webpack_require__(54)
-	var textParser = __webpack_require__(55)
-	var dirParser = __webpack_require__(56)
-	var expParser = __webpack_require__(57)
+	var _ = __webpack_require__(14)
+	var Watcher = __webpack_require__(53)
+	var Path = __webpack_require__(62)
+	var textParser = __webpack_require__(63)
+	var dirParser = __webpack_require__(64)
+	var expParser = __webpack_require__(65)
 	var filterRE = /[^|]\|[^|]/
 
 	/**
@@ -2717,11 +2786,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var transition = __webpack_require__(58)
+	var _ = __webpack_require__(14)
+	var transition = __webpack_require__(60)
 
 	/**
 	 * Append instance to target
@@ -2931,10 +3000,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 16 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 
 	/**
 	 * Listen on the given `event` with `fn`.
@@ -3112,10 +3181,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 17 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 
 	/**
 	 * Create a child instance that prototypally inehrits
@@ -3170,11 +3239,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var compile = __webpack_require__(59)
+	var _ = __webpack_require__(14)
+	var compile = __webpack_require__(58)
 
 	/**
 	 * Set instance target element and kick off the compilation
@@ -3320,37 +3389,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 19 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// manipulation directives
-	exports.text       = __webpack_require__(35)
-	exports.html       = __webpack_require__(36)
-	exports.attr       = __webpack_require__(37)
-	exports.show       = __webpack_require__(38)
-	exports['class']   = __webpack_require__(39)
-	exports.el         = __webpack_require__(40)
-	exports.ref        = __webpack_require__(41)
-	exports.cloak      = __webpack_require__(42)
-	exports.style      = __webpack_require__(43)
-	exports.partial    = __webpack_require__(44)
-	exports.transition = __webpack_require__(45)
+	exports.text       = __webpack_require__(36)
+	exports.html       = __webpack_require__(37)
+	exports.attr       = __webpack_require__(38)
+	exports.show       = __webpack_require__(39)
+	exports['class']   = __webpack_require__(40)
+	exports.el         = __webpack_require__(41)
+	exports.ref        = __webpack_require__(42)
+	exports.cloak      = __webpack_require__(43)
+	exports.style      = __webpack_require__(44)
+	exports.partial    = __webpack_require__(45)
+	exports.transition = __webpack_require__(46)
 
 	// event listener directives
-	exports.on         = __webpack_require__(46)
+	exports.on         = __webpack_require__(47)
 	exports.model      = __webpack_require__(61)
 
 	// child vm directives
-	exports.component  = __webpack_require__(47)
-	exports.repeat     = __webpack_require__(48)
-	exports['if']      = __webpack_require__(49)
-	exports['with']    = __webpack_require__(50)
+	exports.component  = __webpack_require__(48)
+	exports.repeat     = __webpack_require__(49)
+	exports['if']      = __webpack_require__(50)
+	exports['with']    = __webpack_require__(51)
 
 /***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 
 	/**
 	 * Stringify value.
@@ -3470,13 +3539,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Install special array filters
 	 */
 
-	_.extend(exports, __webpack_require__(51))
+	_.extend(exports, __webpack_require__(52))
 
 /***/ },
-/* 21 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var mergeOptions = __webpack_require__(32)
+	var mergeOptions = __webpack_require__(34)
 
 	/**
 	 * The main init sequence. This is called for every
@@ -3554,10 +3623,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 22 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 	var inDoc = _.inDoc
 
 	/**
@@ -3681,12 +3750,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 23 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var Observer = __webpack_require__(62)
-	var Binding = __webpack_require__(53)
+	var _ = __webpack_require__(14)
+	var Observer = __webpack_require__(66)
+	var Binding = __webpack_require__(54)
 
 	/**
 	 * Setup the scope of an instance, which contains:
@@ -3903,13 +3972,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 24 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var Directive = __webpack_require__(52)
-	var compile = __webpack_require__(59)
-	var transclude = __webpack_require__(60)
+	var _ = __webpack_require__(14)
+	var Directive = __webpack_require__(55)
+	var compile = __webpack_require__(58)
+	var transclude = __webpack_require__(59)
 
 	/**
 	 * Transclude, compile and link element.
@@ -3979,7 +4048,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 25 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -3989,9 +4058,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @license  MIT
 	 */
 
-	var base64 = __webpack_require__(92)
-	var ieee754 = __webpack_require__(82)
-	var isArray = __webpack_require__(81)
+	var base64 = __webpack_require__(99)
+	var ieee754 = __webpack_require__(90)
+	var isArray = __webpack_require__(89)
 
 	exports.Buffer = Buffer
 	exports.SlowBuffer = Buffer
@@ -5034,10 +5103,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27).Buffer))
 
 /***/ },
-/* 26 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Exports true if environment provides native `WeakMap` implementation,
@@ -5053,7 +5122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5232,7 +5301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 28 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5311,10 +5380,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 29 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var config = __webpack_require__(33)
+	var config = __webpack_require__(35)
 
 	/**
 	 * Check if a node is in the document.
@@ -5492,10 +5561,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(31)
+	var _ = __webpack_require__(33)
 
 	/**
 	 * Resolve read & write filters for a vm instance. The
@@ -5569,10 +5638,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 31 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var config = __webpack_require__(33)
+	var config = __webpack_require__(35)
 
 	/**
 	 * Enable debug utilities. The enableDebug() function and
@@ -5624,10 +5693,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 32 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 	var extend = _.extend
 
 	/**
@@ -5858,7 +5927,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 33 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
@@ -5942,230 +6011,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	})
 
 /***/ },
-/* 34 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var config = __webpack_require__(33)
-	var Observer = __webpack_require__(62)
-	var expParser = __webpack_require__(57)
-	var Batcher = __webpack_require__(70)
-
-	var batcher = new Batcher()
-	var uid = 0
-
-	/**
-	 * A watcher parses an expression, collects dependencies,
-	 * and fires callback when the expression value changes.
-	 * This is used for both the $watch() api and directives.
-	 *
-	 * @param {Vue} vm
-	 * @param {String} expression
-	 * @param {Function} cb
-	 * @param {Array} [filters]
-	 * @param {Boolean} [needSet]
-	 * @param {Boolean} [deep]
-	 * @constructor
-	 */
-
-	function Watcher (vm, expression, cb, filters, needSet, deep) {
-	  this.vm = vm
-	  vm._watcherList.push(this)
-	  this.expression = expression
-	  this.cbs = [cb]
-	  this.id = ++uid // uid for batching
-	  this.active = true
-	  this.deep = deep
-	  this.deps = Object.create(null)
-	  // setup filters if any.
-	  // We delegate directive filters here to the watcher
-	  // because they need to be included in the dependency
-	  // collection process.
-	  this.readFilters = filters && filters.read
-	  this.writeFilters = filters && filters.write
-	  // parse expression for getter/setter
-	  var res = expParser.parse(expression, needSet)
-	  this.getter = res.get
-	  this.setter = res.set
-	  this.value = this.get()
-	}
-
-	var p = Watcher.prototype
-
-	/**
-	 * Add a binding dependency to this directive.
-	 *
-	 * @param {Binding} binding
-	 */
-
-	p.addDep = function (binding) {
-	  var id = binding.id
-	  if (!this.newDeps[id]) {
-	    this.newDeps[id] = binding
-	    if (!this.deps[id]) {
-	      this.deps[id] = binding
-	      binding.addSub(this)
-	    }
-	  }
-	}
-
-	/**
-	 * Evaluate the getter, and re-collect dependencies.
-	 */
-
-	p.get = function () {
-	  this.beforeGet()
-	  var vm = this.vm
-	  var value
-	  try {
-	    value = this.getter.call(vm, vm)
-	  } catch (e) {}
-	  // use JSON.stringify to "touch" every property
-	  // so they are all tracked as dependencies for
-	  // deep watching
-	  if (this.deep) JSON.stringify(value)
-	  value = _.applyFilters(value, this.readFilters, vm)
-	  this.afterGet()
-	  return value
-	}
-
-	/**
-	 * Set the corresponding value with the setter.
-	 *
-	 * @param {*} value
-	 */
-
-	p.set = function (value) {
-	  var vm = this.vm
-	  value = _.applyFilters(
-	    value, this.writeFilters, vm, this.value
-	  )
-	  try {
-	    this.setter.call(vm, vm, value)
-	  } catch (e) {}
-	}
-
-	/**
-	 * Prepare for dependency collection.
-	 */
-
-	p.beforeGet = function () {
-	  Observer.target = this
-	  this.newDeps = {}
-	}
-
-	/**
-	 * Clean up for dependency collection.
-	 */
-
-	p.afterGet = function () {
-	  Observer.target = null
-	  for (var id in this.deps) {
-	    if (!this.newDeps[id]) {
-	      this.deps[id].removeSub(this)
-	    }
-	  }
-	  this.deps = this.newDeps
-	}
-
-	/**
-	 * Subscriber interface.
-	 * Will be called when a dependency changes.
-	 */
-
-	p.update = function () {
-	  if (config.async) {
-	    batcher.push(this)
-	  } else {
-	    this.run()
-	  }
-	}
-
-	/**
-	 * Batcher job interface.
-	 * Will be called by the batcher.
-	 */
-
-	p.run = function () {
-	  if (this.active) {
-	    var value = this.get()
-	    if (
-	      (typeof value === 'object' && value !== null) ||
-	      value !== this.value
-	    ) {
-	      var oldValue = this.value
-	      this.value = value
-	      var cbs = this.cbs
-	      for (var i = 0, l = cbs.length; i < l; i++) {
-	        cbs[i](value, oldValue)
-	        // if a callback also removed other callbacks,
-	        // we need to adjust the loop accordingly.
-	        var removed = l - cbs.length
-	        if (removed) {
-	          i -= removed
-	          l -= removed
-	        }
-	      }
-	    }
-	  }
-	}
-
-	/**
-	 * Add a callback.
-	 *
-	 * @param {Function} cb
-	 */
-
-	p.addCb = function (cb) {
-	  this.cbs.push(cb)
-	}
-
-	/**
-	 * Remove a callback.
-	 *
-	 * @param {Function} cb
-	 */
-
-	p.removeCb = function (cb) {
-	  var cbs = this.cbs
-	  if (cbs.length > 1) {
-	    var i = cbs.indexOf(cb)
-	    if (i > -1) {
-	      cbs.splice(i, 1)
-	    }
-	  } else if (cb === cbs[0]) {
-	    this.teardown()
-	  }
-	}
-
-	/**
-	 * Remove self from all dependencies' subcriber list.
-	 */
-
-	p.teardown = function () {
-	  if (this.active) {
-	    // remove self from vm's watcher list
-	    // we can skip this if the vm if being destroyed
-	    // which can improve teardown performance.
-	    if (!this.vm._isBeingDestroyed) {
-	      var list = this.vm._watcherList
-	      list.splice(list.indexOf(this))
-	    }
-	    for (var id in this.deps) {
-	      this.deps[id].removeSub(this)
-	    }
-	    this.active = false
-	    this.vm = this.cbs = this.value = null
-	  }
-	}
-
-	module.exports = Watcher
-
-/***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 
 	module.exports = {
 
@@ -6182,11 +6031,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var templateParser = __webpack_require__(71)
+	var _ = __webpack_require__(14)
+	var templateParser = __webpack_require__(72)
 
 	module.exports = {
 
@@ -6224,7 +6073,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// xlink
@@ -6261,10 +6110,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var transition = __webpack_require__(58)
+	var transition = __webpack_require__(60)
 
 	module.exports = function (value) {
 	  var el = this.el
@@ -6274,10 +6123,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 	var addClass = _.addClass
 	var removeClass = _.removeClass
 
@@ -6297,7 +6146,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
@@ -6315,10 +6164,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 
 	module.exports = {
 
@@ -6344,10 +6193,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var config = __webpack_require__(33)
+	var config = __webpack_require__(35)
 
 	module.exports = {
 
@@ -6361,7 +6210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var prefixes = ['-webkit-', '-moz-', '-ms-']
@@ -6412,12 +6261,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var templateParser = __webpack_require__(71)
-	var transition = __webpack_require__(58)
+	var _ = __webpack_require__(14)
+	var templateParser = __webpack_require__(72)
+	var transition = __webpack_require__(60)
 
 	module.exports = {
 
@@ -6472,7 +6321,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
@@ -6489,10 +6338,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 
 	module.exports = {
 
@@ -6553,11 +6402,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var templateParser = __webpack_require__(71)
+	var _ = __webpack_require__(14)
+	var templateParser = __webpack_require__(72)
 
 	module.exports = {
 
@@ -6714,17 +6563,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 	var isObject = _.isObject
-	var textParser = __webpack_require__(55)
-	var expParser = __webpack_require__(57)
-	var templateParser = __webpack_require__(71)
-	var compile = __webpack_require__(59)
-	var transclude = __webpack_require__(60)
-	var mergeOptions = __webpack_require__(32)
+	var textParser = __webpack_require__(63)
+	var expParser = __webpack_require__(65)
+	var templateParser = __webpack_require__(72)
+	var compile = __webpack_require__(58)
+	var transclude = __webpack_require__(59)
+	var mergeOptions = __webpack_require__(34)
 	var uid = 0
 
 	module.exports = {
@@ -7226,13 +7075,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var compile = __webpack_require__(59)
-	var templateParser = __webpack_require__(71)
-	var transition = __webpack_require__(58)
+	var _ = __webpack_require__(14)
+	var compile = __webpack_require__(58)
+	var templateParser = __webpack_require__(72)
+	var transition = __webpack_require__(60)
 
 	module.exports = {
 
@@ -7299,11 +7148,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var Watcher = __webpack_require__(34)
+	var _ = __webpack_require__(14)
+	var Watcher = __webpack_require__(53)
 
 	module.exports = {
 
@@ -7351,11 +7200,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var Path = __webpack_require__(54)
+	var _ = __webpack_require__(14)
+	var Path = __webpack_require__(62)
 
 	/**
 	 * Filter filter for v-repeat
@@ -7443,14 +7292,289 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var config = __webpack_require__(33)
-	var Watcher = __webpack_require__(34)
-	var textParser = __webpack_require__(55)
-	var expParser = __webpack_require__(57)
+	var _ = __webpack_require__(14)
+	var config = __webpack_require__(35)
+	var Observer = __webpack_require__(66)
+	var expParser = __webpack_require__(65)
+	var Batcher = __webpack_require__(73)
+
+	var batcher = new Batcher()
+	var uid = 0
+
+	/**
+	 * A watcher parses an expression, collects dependencies,
+	 * and fires callback when the expression value changes.
+	 * This is used for both the $watch() api and directives.
+	 *
+	 * @param {Vue} vm
+	 * @param {String} expression
+	 * @param {Function} cb
+	 * @param {Array} [filters]
+	 * @param {Boolean} [needSet]
+	 * @param {Boolean} [deep]
+	 * @constructor
+	 */
+
+	function Watcher (vm, expression, cb, filters, needSet, deep) {
+	  this.vm = vm
+	  vm._watcherList.push(this)
+	  this.expression = expression
+	  this.cbs = [cb]
+	  this.id = ++uid // uid for batching
+	  this.active = true
+	  this.deep = deep
+	  this.deps = Object.create(null)
+	  // setup filters if any.
+	  // We delegate directive filters here to the watcher
+	  // because they need to be included in the dependency
+	  // collection process.
+	  this.readFilters = filters && filters.read
+	  this.writeFilters = filters && filters.write
+	  // parse expression for getter/setter
+	  var res = expParser.parse(expression, needSet)
+	  this.getter = res.get
+	  this.setter = res.set
+	  this.value = this.get()
+	}
+
+	var p = Watcher.prototype
+
+	/**
+	 * Add a binding dependency to this directive.
+	 *
+	 * @param {Binding} binding
+	 */
+
+	p.addDep = function (binding) {
+	  var id = binding.id
+	  if (!this.newDeps[id]) {
+	    this.newDeps[id] = binding
+	    if (!this.deps[id]) {
+	      this.deps[id] = binding
+	      binding.addSub(this)
+	    }
+	  }
+	}
+
+	/**
+	 * Evaluate the getter, and re-collect dependencies.
+	 */
+
+	p.get = function () {
+	  this.beforeGet()
+	  var vm = this.vm
+	  var value
+	  try {
+	    value = this.getter.call(vm, vm)
+	  } catch (e) {}
+	  // use JSON.stringify to "touch" every property
+	  // so they are all tracked as dependencies for
+	  // deep watching
+	  if (this.deep) JSON.stringify(value)
+	  value = _.applyFilters(value, this.readFilters, vm)
+	  this.afterGet()
+	  return value
+	}
+
+	/**
+	 * Set the corresponding value with the setter.
+	 *
+	 * @param {*} value
+	 */
+
+	p.set = function (value) {
+	  var vm = this.vm
+	  value = _.applyFilters(
+	    value, this.writeFilters, vm, this.value
+	  )
+	  try {
+	    this.setter.call(vm, vm, value)
+	  } catch (e) {}
+	}
+
+	/**
+	 * Prepare for dependency collection.
+	 */
+
+	p.beforeGet = function () {
+	  Observer.target = this
+	  this.newDeps = {}
+	}
+
+	/**
+	 * Clean up for dependency collection.
+	 */
+
+	p.afterGet = function () {
+	  Observer.target = null
+	  for (var id in this.deps) {
+	    if (!this.newDeps[id]) {
+	      this.deps[id].removeSub(this)
+	    }
+	  }
+	  this.deps = this.newDeps
+	}
+
+	/**
+	 * Subscriber interface.
+	 * Will be called when a dependency changes.
+	 */
+
+	p.update = function () {
+	  if (config.async) {
+	    batcher.push(this)
+	  } else {
+	    this.run()
+	  }
+	}
+
+	/**
+	 * Batcher job interface.
+	 * Will be called by the batcher.
+	 */
+
+	p.run = function () {
+	  if (this.active) {
+	    var value = this.get()
+	    if (
+	      (typeof value === 'object' && value !== null) ||
+	      value !== this.value
+	    ) {
+	      var oldValue = this.value
+	      this.value = value
+	      var cbs = this.cbs
+	      for (var i = 0, l = cbs.length; i < l; i++) {
+	        cbs[i](value, oldValue)
+	        // if a callback also removed other callbacks,
+	        // we need to adjust the loop accordingly.
+	        var removed = l - cbs.length
+	        if (removed) {
+	          i -= removed
+	          l -= removed
+	        }
+	      }
+	    }
+	  }
+	}
+
+	/**
+	 * Add a callback.
+	 *
+	 * @param {Function} cb
+	 */
+
+	p.addCb = function (cb) {
+	  this.cbs.push(cb)
+	}
+
+	/**
+	 * Remove a callback.
+	 *
+	 * @param {Function} cb
+	 */
+
+	p.removeCb = function (cb) {
+	  var cbs = this.cbs
+	  if (cbs.length > 1) {
+	    var i = cbs.indexOf(cb)
+	    if (i > -1) {
+	      cbs.splice(i, 1)
+	    }
+	  } else if (cb === cbs[0]) {
+	    this.teardown()
+	  }
+	}
+
+	/**
+	 * Remove self from all dependencies' subcriber list.
+	 */
+
+	p.teardown = function () {
+	  if (this.active) {
+	    // remove self from vm's watcher list
+	    // we can skip this if the vm if being destroyed
+	    // which can improve teardown performance.
+	    if (!this.vm._isBeingDestroyed) {
+	      var list = this.vm._watcherList
+	      list.splice(list.indexOf(this))
+	    }
+	    for (var id in this.deps) {
+	      this.deps[id].removeSub(this)
+	    }
+	    this.active = false
+	    this.vm = this.cbs = this.value = null
+	  }
+	}
+
+	module.exports = Watcher
+
+/***/ },
+/* 54 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var uid = 0
+
+	/**
+	 * A binding is an observable that can have multiple
+	 * directives subscribing to it.
+	 *
+	 * @constructor
+	 */
+
+	function Binding () {
+	  this.id = ++uid
+	  this.subs = []
+	}
+
+	var p = Binding.prototype
+
+	/**
+	 * Add a directive subscriber.
+	 *
+	 * @param {Directive} sub
+	 */
+
+	p.addSub = function (sub) {
+	  this.subs.push(sub)
+	}
+
+	/**
+	 * Remove a directive subscriber.
+	 *
+	 * @param {Directive} sub
+	 */
+
+	p.removeSub = function (sub) {
+	  if (this.subs.length) {
+	    var i = this.subs.indexOf(sub)
+	    if (i > -1) this.subs.splice(i, 1)
+	  }
+	}
+
+	/**
+	 * Notify all subscribers of a new value.
+	 */
+
+	p.notify = function () {
+	  for (var i = 0, l = this.subs.length; i < l; i++) {
+	    this.subs[i].update()
+	  }
+	}
+
+	module.exports = Binding
+
+/***/ },
+/* 55 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(14)
+	var config = __webpack_require__(35)
+	var Watcher = __webpack_require__(53)
+	var textParser = __webpack_require__(63)
+	var expParser = __webpack_require__(65)
 
 	/**
 	 * A directive links a DOM element with a piece of data,
@@ -7650,1108 +7774,92 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Directive
 
 /***/ },
-/* 53 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var uid = 0
-
-	/**
-	 * A binding is an observable that can have multiple
-	 * directives subscribing to it.
-	 *
-	 * @constructor
-	 */
-
-	function Binding () {
-	  this.id = ++uid
-	  this.subs = []
-	}
-
-	var p = Binding.prototype
-
-	/**
-	 * Add a directive subscriber.
-	 *
-	 * @param {Directive} sub
-	 */
-
-	p.addSub = function (sub) {
-	  this.subs.push(sub)
-	}
-
-	/**
-	 * Remove a directive subscriber.
-	 *
-	 * @param {Directive} sub
-	 */
-
-	p.removeSub = function (sub) {
-	  if (this.subs.length) {
-	    var i = this.subs.indexOf(sub)
-	    if (i > -1) this.subs.splice(i, 1)
-	  }
-	}
-
-	/**
-	 * Notify all subscribers of a new value.
-	 */
-
-	p.notify = function () {
-	  for (var i = 0, l = this.subs.length; i < l; i++) {
-	    this.subs[i].update()
-	  }
-	}
-
-	module.exports = Binding
-
-/***/ },
-/* 54 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var _ = __webpack_require__(12)
-	var Cache = __webpack_require__(72)
-	var pathCache = new Cache(1000)
-	var identRE = /^[$_a-zA-Z]+[\w$]*$/
-
-	/**
-	 * Path-parsing algorithm scooped from Polymer/observe-js
-	 */
-
-	var pathStateMachine = {
-	  'beforePath': {
-	    'ws': ['beforePath'],
-	    'ident': ['inIdent', 'append'],
-	    '[': ['beforeElement'],
-	    'eof': ['afterPath']
-	  },
-
-	  'inPath': {
-	    'ws': ['inPath'],
-	    '.': ['beforeIdent'],
-	    '[': ['beforeElement'],
-	    'eof': ['afterPath']
-	  },
-
-	  'beforeIdent': {
-	    'ws': ['beforeIdent'],
-	    'ident': ['inIdent', 'append']
-	  },
-
-	  'inIdent': {
-	    'ident': ['inIdent', 'append'],
-	    '0': ['inIdent', 'append'],
-	    'number': ['inIdent', 'append'],
-	    'ws': ['inPath', 'push'],
-	    '.': ['beforeIdent', 'push'],
-	    '[': ['beforeElement', 'push'],
-	    'eof': ['afterPath', 'push']
-	  },
-
-	  'beforeElement': {
-	    'ws': ['beforeElement'],
-	    '0': ['afterZero', 'append'],
-	    'number': ['inIndex', 'append'],
-	    "'": ['inSingleQuote', 'append', ''],
-	    '"': ['inDoubleQuote', 'append', '']
-	  },
-
-	  'afterZero': {
-	    'ws': ['afterElement', 'push'],
-	    ']': ['inPath', 'push']
-	  },
-
-	  'inIndex': {
-	    '0': ['inIndex', 'append'],
-	    'number': ['inIndex', 'append'],
-	    'ws': ['afterElement'],
-	    ']': ['inPath', 'push']
-	  },
-
-	  'inSingleQuote': {
-	    "'": ['afterElement'],
-	    'eof': 'error',
-	    'else': ['inSingleQuote', 'append']
-	  },
-
-	  'inDoubleQuote': {
-	    '"': ['afterElement'],
-	    'eof': 'error',
-	    'else': ['inDoubleQuote', 'append']
-	  },
-
-	  'afterElement': {
-	    'ws': ['afterElement'],
-	    ']': ['inPath', 'push']
-	  }
-	}
-
-	function noop () {}
-
-	/**
-	 * Determine the type of a character in a keypath.
-	 *
-	 * @param {Char} char
-	 * @return {String} type
-	 */
-
-	function getPathCharType (char) {
-	  if (char === undefined) {
-	    return 'eof'
-	  }
-
-	  var code = char.charCodeAt(0)
-
-	  switch(code) {
-	    case 0x5B: // [
-	    case 0x5D: // ]
-	    case 0x2E: // .
-	    case 0x22: // "
-	    case 0x27: // '
-	    case 0x30: // 0
-	      return char
-
-	    case 0x5F: // _
-	    case 0x24: // $
-	      return 'ident'
-
-	    case 0x20: // Space
-	    case 0x09: // Tab
-	    case 0x0A: // Newline
-	    case 0x0D: // Return
-	    case 0xA0:  // No-break space
-	    case 0xFEFF:  // Byte Order Mark
-	    case 0x2028:  // Line Separator
-	    case 0x2029:  // Paragraph Separator
-	      return 'ws'
-	  }
-
-	  // a-z, A-Z
-	  if ((0x61 <= code && code <= 0x7A) ||
-	      (0x41 <= code && code <= 0x5A)) {
-	    return 'ident'
-	  }
-
-	  // 1-9
-	  if (0x31 <= code && code <= 0x39) {
-	    return 'number'
-	  }
-
-	  return 'else'
-	}
-
-	/**
-	 * Parse a string path into an array of segments
-	 * Todo implement cache
-	 *
-	 * @param {String} path
-	 * @return {Array|undefined}
-	 */
-
-	function parsePath (path) {
-	  var keys = []
-	  var index = -1
-	  var mode = 'beforePath'
-	  var c, newChar, key, type, transition, action, typeMap
-
-	  var actions = {
-	    push: function() {
-	      if (key === undefined) {
-	        return
-	      }
-	      keys.push(key)
-	      key = undefined
-	    },
-	    append: function() {
-	      if (key === undefined) {
-	        key = newChar
-	      } else {
-	        key += newChar
-	      }
-	    }
-	  }
-
-	  function maybeUnescapeQuote () {
-	    var nextChar = path[index + 1]
-	    if ((mode === 'inSingleQuote' && nextChar === "'") ||
-	        (mode === 'inDoubleQuote' && nextChar === '"')) {
-	      index++
-	      newChar = nextChar
-	      actions.append()
-	      return true
-	    }
-	  }
-
-	  while (mode) {
-	    index++
-	    c = path[index]
-
-	    if (c === '\\' && maybeUnescapeQuote()) {
-	      continue
-	    }
-
-	    type = getPathCharType(c)
-	    typeMap = pathStateMachine[mode]
-	    transition = typeMap[type] || typeMap['else'] || 'error'
-
-	    if (transition === 'error') {
-	      return // parse error
-	    }
-
-	    mode = transition[0]
-	    action = actions[transition[1]] || noop
-	    newChar = transition[2] === undefined
-	      ? c
-	      : transition[2]
-	    action()
-
-	    if (mode === 'afterPath') {
-	      return keys
-	    }
-	  }
-	}
-
-	/**
-	 * Format a accessor segment based on its type.
-	 *
-	 * @param {String} key
-	 * @return {Boolean}
-	 */
-
-	function formatAccessor(key) {
-	  if (identRE.test(key)) { // identifier
-	    return '.' + key
-	  } else if (+key === key >>> 0) { // bracket index
-	    return '[' + key + ']';
-	  } else { // bracket string
-	    return '["' + key.replace(/"/g, '\\"') + '"]';
-	  }
-	}
-
-	/**
-	 * Compiles a getter function with a fixed path.
-	 *
-	 * @param {Array} path
-	 * @return {Function}
-	 */
-
-	exports.compileGetter = function (path) {
-	  var body =
-	    'try{return o' +
-	    path.map(formatAccessor).join('') +
-	    '}catch(e){};'
-	  return new Function('o', body)
-	}
-
-	/**
-	 * External parse that check for a cache hit first
-	 *
-	 * @param {String} path
-	 * @return {Array|undefined}
-	 */
-
-	exports.parse = function (path) {
-	  var hit = pathCache.get(path)
-	  if (!hit) {
-	    hit = parsePath(path)
-	    if (hit) {
-	      hit.get = exports.compileGetter(hit)
-	      pathCache.put(path, hit)
-	    }
-	  }
-	  return hit
-	}
-
-	/**
-	 * Get from an object from a path string
-	 *
-	 * @param {Object} obj
-	 * @param {String} path
-	 */
-
-	exports.get = function (obj, path) {
-	  path = exports.parse(path)
-	  if (path) {
-	    return path.get(obj)
-	  }
-	}
-
-	/**
-	 * Set on an object from a path
-	 *
-	 * @param {Object} obj
-	 * @param {String | Array} path
-	 * @param {*} val
-	 */
-
-	exports.set = function (obj, path, val) {
-	  if (typeof path === 'string') {
-	    path = exports.parse(path)
-	  }
-	  if (!path || !_.isObject(obj)) {
-	    return false
-	  }
-	  var last, key
-	  for (var i = 0, l = path.length - 1; i < l; i++) {
-	    last = obj
-	    key = path[i]
-	    obj = obj[key]
-	    if (!_.isObject(obj)) {
-	      obj = {}
-	      last.$add(key, obj)
-	    }
-	  }
-	  key = path[i]
-	  if (key in obj) {
-	    obj[key] = val
-	  } else {
-	    obj.$add(key, val)
-	  }
-	  return true
-	}
-
-/***/ },
-/* 55 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Cache = __webpack_require__(72)
-	var config = __webpack_require__(33)
-	var dirParser = __webpack_require__(56)
-	var regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g
-	var cache, tagRE, htmlRE, firstChar, lastChar
-
-	/**
-	 * Escape a string so it can be used in a RegExp
-	 * constructor.
-	 *
-	 * @param {String} str
-	 */
-
-	function escapeRegex (str) {
-	  return str.replace(regexEscapeRE, '\\$&')
-	}
-
-	/**
-	 * Compile the interpolation tag regex.
-	 *
-	 * @return {RegExp}
-	 */
-
-	function compileRegex () {
-	  config._delimitersChanged = false
-	  var open = config.delimiters[0]
-	  var close = config.delimiters[1]
-	  firstChar = open.charAt(0)
-	  lastChar = close.charAt(close.length - 1)
-	  var firstCharRE = escapeRegex(firstChar)
-	  var lastCharRE = escapeRegex(lastChar)
-	  var openRE = escapeRegex(open)
-	  var closeRE = escapeRegex(close)
-	  tagRE = new RegExp(
-	    firstCharRE + '?' + openRE +
-	    '(.+?)' +
-	    closeRE + lastCharRE + '?',
-	    'g'
-	  )
-	  htmlRE = new RegExp(
-	    '^' + firstCharRE + openRE +
-	    '.*' +
-	    closeRE + lastCharRE + '$'
-	  )
-	  // reset cache
-	  cache = new Cache(1000)
-	}
-
-	/**
-	 * Parse a template text string into an array of tokens.
-	 *
-	 * @param {String} text
-	 * @return {Array<Object> | null}
-	 *               - {String} type
-	 *               - {String} value
-	 *               - {Boolean} [html]
-	 *               - {Boolean} [oneTime]
-	 */
-
-	exports.parse = function (text) {
-	  if (config._delimitersChanged) {
-	    compileRegex()
-	  }
-	  var hit = cache.get(text)
-	  if (hit) {
-	    return hit
-	  }
-	  if (!tagRE.test(text)) {
-	    return null
-	  }
-	  var tokens = []
-	  var lastIndex = tagRE.lastIndex = 0
-	  var match, index, value, first, oneTime, partial
-	  /* jshint boss:true */
-	  while (match = tagRE.exec(text)) {
-	    index = match.index
-	    // push text token
-	    if (index > lastIndex) {
-	      tokens.push({
-	        value: text.slice(lastIndex, index)
-	      })
-	    }
-	    // tag token
-	    first = match[1].charCodeAt(0)
-	    oneTime = first === 0x2A // *
-	    partial = first === 0x3E // >
-	    value = (oneTime || partial)
-	      ? match[1].slice(1)
-	      : match[1]
-	    tokens.push({
-	      tag: true,
-	      value: value.trim(),
-	      html: htmlRE.test(match[0]),
-	      oneTime: oneTime,
-	      partial: partial
-	    })
-	    lastIndex = index + match[0].length
-	  }
-	  if (lastIndex < text.length) {
-	    tokens.push({
-	      value: text.slice(lastIndex)
-	    })
-	  }
-	  cache.put(text, tokens)
-	  return tokens
-	}
-
-	/**
-	 * Format a list of tokens into an expression.
-	 * e.g. tokens parsed from 'a {{b}} c' can be serialized
-	 * into one single expression as '"a " + b + " c"'.
-	 *
-	 * @param {Array} tokens
-	 * @param {Vue} [vm]
-	 * @return {String}
-	 */
-
-	exports.tokensToExp = function (tokens, vm) {
-	  return tokens.length > 1
-	    ? tokens.map(function (token) {
-	        return formatToken(token, vm)
-	      }).join('+')
-	    : formatToken(tokens[0], vm, true)
-	}
-
-	/**
-	 * Format a single token.
-	 *
-	 * @param {Object} token
-	 * @param {Vue} [vm]
-	 * @param {Boolean} single
-	 * @return {String}
-	 */
-
-	function formatToken (token, vm, single) {
-	  return token.tag
-	    ? vm && token.oneTime
-	      ? '"' + vm.$eval(token.value) + '"'
-	      : single
-	        ? token.value
-	        : inlineFilters(token.value)
-	    : '"' + token.value + '"'
-	}
-
-	/**
-	 * For an attribute with multiple interpolation tags,
-	 * e.g. attr="some-{{thing | filter}}", in order to combine
-	 * the whole thing into a single watchable expression, we
-	 * have to inline those filters. This function does exactly
-	 * that. This is a bit hacky but it avoids heavy changes
-	 * to directive parser and watcher mechanism.
-	 *
-	 * @param {String} exp
-	 * @return {String}
-	 */
-
-	var filterRE = /[^|]\|[^|]/
-	function inlineFilters (exp) {
-	  if (!filterRE.test(exp)) {
-	    return '(' + exp + ')'
-	  } else {
-	    var dir = dirParser.parse(exp)[0]
-	    if (!dir.filters) {
-	      return '(' + exp + ')'
-	    } else {
-	      exp = dir.expression
-	      for (var i = 0, l = dir.filters.length; i < l; i++) {
-	        var filter = dir.filters[i]
-	        var args = filter.args
-	          ? ',"' + filter.args.join('","') + '"'
-	          : ''
-	        exp = 'this.$options.filters["' + filter.name + '"]' +
-	          '.apply(this,[' + exp + args + '])'
-	      }
-	      return exp
-	    }
-	  }
-	}
-
-/***/ },
 /* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var Cache = __webpack_require__(72)
-	var cache = new Cache(1000)
-	var argRE = /^[^\{\?]+$|^'[^']*'$|^"[^"]*"$/
-	var filterTokenRE = /[^\s'"]+|'[^']+'|"[^"]+"/g
+	'use strict';
 
-	/**
-	 * Parser state
-	 */
+	var assign        = __webpack_require__(85)
+	  , normalizeOpts = __webpack_require__(74)
+	  , isCallable    = __webpack_require__(75)
+	  , contains      = __webpack_require__(96)
 
-	var str
-	var c, i, l
-	var inSingle
-	var inDouble
-	var curly
-	var square
-	var paren
-	var begin
-	var argIndex
-	var dirs
-	var dir
-	var lastFilterIndex
-	var arg
+	  , d;
 
-	/**
-	 * Push a directive object into the result Array
-	 */
+	d = module.exports = function (dscr, value/*, options*/) {
+		var c, e, w, options, desc;
+		if ((arguments.length < 2) || (typeof dscr !== 'string')) {
+			options = value;
+			value = dscr;
+			dscr = null;
+		} else {
+			options = arguments[2];
+		}
+		if (dscr == null) {
+			c = w = true;
+			e = false;
+		} else {
+			c = contains.call(dscr, 'c');
+			e = contains.call(dscr, 'e');
+			w = contains.call(dscr, 'w');
+		}
 
-	function pushDir () {
-	  dir.raw = str.slice(begin, i).trim()
-	  if (dir.expression === undefined) {
-	    dir.expression = str.slice(argIndex, i).trim()
-	  } else if (lastFilterIndex !== begin) {
-	    pushFilter()
-	  }
-	  if (i === 0 || dir.expression) {
-	    dirs.push(dir)
-	  }
-	}
+		desc = { value: value, configurable: c, enumerable: e, writable: w };
+		return !options ? desc : assign(normalizeOpts(options), desc);
+	};
 
-	/**
-	 * Push a filter to the current directive object
-	 */
+	d.gs = function (dscr, get, set/*, options*/) {
+		var c, e, options, desc;
+		if (typeof dscr !== 'string') {
+			options = set;
+			set = get;
+			get = dscr;
+			dscr = null;
+		} else {
+			options = arguments[3];
+		}
+		if (get == null) {
+			get = undefined;
+		} else if (!isCallable(get)) {
+			options = get;
+			get = set = undefined;
+		} else if (set == null) {
+			set = undefined;
+		} else if (!isCallable(set)) {
+			options = set;
+			set = undefined;
+		}
+		if (dscr == null) {
+			c = true;
+			e = false;
+		} else {
+			c = contains.call(dscr, 'c');
+			e = contains.call(dscr, 'e');
+		}
 
-	function pushFilter () {
-	  var exp = str.slice(lastFilterIndex, i).trim()
-	  var filter
-	  if (exp) {
-	    filter = {}
-	    var tokens = exp.match(filterTokenRE)
-	    filter.name = tokens[0]
-	    filter.args = tokens.length > 1 ? tokens.slice(1) : null
-	  }
-	  if (filter) {
-	    (dir.filters = dir.filters || []).push(filter)
-	  }
-	  lastFilterIndex = i + 1
-	}
+		desc = { get: get, set: set, configurable: c, enumerable: e };
+		return !options ? desc : assign(normalizeOpts(options), desc);
+	};
 
-	/**
-	 * Parse a directive string into an Array of AST-like
-	 * objects representing directives.
-	 *
-	 * Example:
-	 *
-	 * "click: a = a + 1 | uppercase" will yield:
-	 * {
-	 *   arg: 'click',
-	 *   expression: 'a = a + 1',
-	 *   filters: [
-	 *     { name: 'uppercase', args: null }
-	 *   ]
-	 * }
-	 *
-	 * @param {String} str
-	 * @return {Array<Object>}
-	 */
-
-	exports.parse = function (s) {
-
-	  var hit = cache.get(s)
-	  if (hit) {
-	    return hit
-	  }
-
-	  // reset parser state
-	  str = s
-	  inSingle = inDouble = false
-	  curly = square = paren = begin = argIndex = 0
-	  lastFilterIndex = 0
-	  dirs = []
-	  dir = {}
-	  arg = null
-
-	  for (i = 0, l = str.length; i < l; i++) {
-	    c = str.charCodeAt(i)
-	    if (inSingle) {
-	      // check single quote
-	      if (c === 0x27) inSingle = !inSingle
-	    } else if (inDouble) {
-	      // check double quote
-	      if (c === 0x22) inDouble = !inDouble
-	    } else if (
-	      c === 0x2C && // comma
-	      !paren && !curly && !square
-	    ) {
-	      // reached the end of a directive
-	      pushDir()
-	      // reset & skip the comma
-	      dir = {}
-	      begin = argIndex = lastFilterIndex = i + 1
-	    } else if (
-	      c === 0x3A && // colon
-	      !dir.expression &&
-	      !dir.arg
-	    ) {
-	      // argument
-	      arg = str.slice(begin, i).trim()
-	      // test for valid argument here
-	      // since we may have caught stuff like first half of
-	      // an object literal or a ternary expression.
-	      if (argRE.test(arg)) {
-	        argIndex = i + 1
-	        dir.arg = _.stripQuotes(arg) || arg
-	      }
-	    } else if (
-	      c === 0x7C && // pipe
-	      str.charCodeAt(i + 1) !== 0x7C &&
-	      str.charCodeAt(i - 1) !== 0x7C
-	    ) {
-	      if (dir.expression === undefined) {
-	        // first filter, end of expression
-	        lastFilterIndex = i + 1
-	        dir.expression = str.slice(argIndex, i).trim()
-	      } else {
-	        // already has filter
-	        pushFilter()
-	      }
-	    } else {
-	      switch (c) {
-	        case 0x22: inDouble = true; break // "
-	        case 0x27: inSingle = true; break // '
-	        case 0x28: paren++; break         // (
-	        case 0x29: paren--; break         // )
-	        case 0x5B: square++; break        // [
-	        case 0x5D: square--; break        // ]
-	        case 0x7B: curly++; break         // {
-	        case 0x7D: curly--; break         // }
-	      }
-	    }
-	  }
-
-	  if (i === 0 || begin !== i) {
-	    pushDir()
-	  }
-
-	  cache.put(s, dirs)
-	  return dirs
-	}
 
 /***/ },
 /* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var Path = __webpack_require__(54)
-	var Cache = __webpack_require__(72)
-	var expressionCache = new Cache(1000)
+	'use strict';
 
-	var keywords =
-	  'Math,break,case,catch,continue,debugger,default,' +
-	  'delete,do,else,false,finally,for,function,if,in,' +
-	  'instanceof,new,null,return,switch,this,throw,true,try,' +
-	  'typeof,var,void,while,with,undefined,abstract,boolean,' +
-	  'byte,char,class,const,double,enum,export,extends,' +
-	  'final,float,goto,implements,import,int,interface,long,' +
-	  'native,package,private,protected,public,short,static,' +
-	  'super,synchronized,throws,transient,volatile,' +
-	  'arguments,let,yield'
+	module.exports = __webpack_require__(76)() ? Symbol : __webpack_require__(77);
 
-	var wsRE = /\s/g
-	var newlineRE = /\n/g
-	var saveRE = /[\{,]\s*[\w\$_]+\s*:|'[^']*'|"[^"]*"/g
-	var restoreRE = /"(\d+)"/g
-	var pathTestRE = /^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*|\['.*?'\]|\[".*?"\])*$/
-	var pathReplaceRE = /[^\w$\.]([A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*|\['.*?'\]|\[".*?"\])*)/g
-	var keywordsRE = new RegExp('^(' + keywords.replace(/,/g, '\\b|') + '\\b)')
-
-	/**
-	 * Save / Rewrite / Restore
-	 *
-	 * When rewriting paths found in an expression, it is
-	 * possible for the same letter sequences to be found in
-	 * strings and Object literal property keys. Therefore we
-	 * remove and store these parts in a temporary array, and
-	 * restore them after the path rewrite.
-	 */
-
-	var saved = []
-
-	/**
-	 * Save replacer
-	 *
-	 * @param {String} str
-	 * @return {String} - placeholder with index
-	 */
-
-	function save (str) {
-	  var i = saved.length
-	  saved[i] = str.replace(newlineRE, '\\n')
-	  return '"' + i + '"'
-	}
-
-	/**
-	 * Path rewrite replacer
-	 *
-	 * @param {String} raw
-	 * @return {String}
-	 */
-
-	function rewrite (raw) {
-	  var c = raw.charAt(0)
-	  var path = raw.slice(1)
-	  if (keywordsRE.test(path)) {
-	    return raw
-	  } else {
-	    path = path.indexOf('"') > -1
-	      ? path.replace(restoreRE, restore)
-	      : path
-	    return c + 'scope.' + path
-	  }
-	}
-
-	/**
-	 * Restore replacer
-	 *
-	 * @param {String} str
-	 * @param {String} i - matched save index
-	 * @return {String}
-	 */
-
-	function restore (str, i) {
-	  return saved[i]
-	}
-
-	/**
-	 * Rewrite an expression, prefixing all path accessors with
-	 * `scope.` and generate getter/setter functions.
-	 *
-	 * @param {String} exp
-	 * @param {Boolean} needSet
-	 * @return {Function}
-	 */
-
-	function compileExpFns (exp, needSet) {
-	  // reset state
-	  saved.length = 0
-	  // save strings and object literal keys
-	  var body = exp
-	    .replace(saveRE, save)
-	    .replace(wsRE, '')
-	  // rewrite all paths
-	  // pad 1 space here becaue the regex matches 1 extra char
-	  body = (' ' + body)
-	    .replace(pathReplaceRE, rewrite)
-	    .replace(restoreRE, restore)
-	  var getter = makeGetter(body)
-	  if (getter) {
-	    return {
-	      get: getter,
-	      body: body,
-	      set: needSet
-	        ? makeSetter(body)
-	        : null
-	    }
-	  }
-	}
-
-	/**
-	 * Compile getter setters for a simple path.
-	 *
-	 * @param {String} exp
-	 * @return {Function}
-	 */
-
-	function compilePathFns (exp) {
-	  var getter, path
-	  if (exp.indexOf('[') < 0) {
-	    // really simple path
-	    path = exp.split('.')
-	    getter = Path.compileGetter(path)
-	  } else {
-	    // do the real parsing
-	    path = Path.parse(exp)
-	    getter = path.get
-	  }
-	  return {
-	    get: getter,
-	    // always generate setter for simple paths
-	    set: function (obj, val) {
-	      Path.set(obj, path, val)
-	    }
-	  }
-	}
-
-	/**
-	 * Build a getter function. Requires eval.
-	 *
-	 * We isolate the try/catch so it doesn't affect the
-	 * optimization of the parse function when it is not called.
-	 *
-	 * @param {String} body
-	 * @return {Function|undefined}
-	 */
-
-	function makeGetter (body) {
-	  try {
-	    return new Function('scope', 'return ' + body + ';')
-	  } catch (e) {
-	    _.warn(
-	      'Invalid expression. ' + 
-	      'Generated function body: ' + body
-	    )
-	  }
-	}
-
-	/**
-	 * Build a setter function.
-	 *
-	 * This is only needed in rare situations like "a[b]" where
-	 * a settable path requires dynamic evaluation.
-	 *
-	 * This setter function may throw error when called if the
-	 * expression body is not a valid left-hand expression in
-	 * assignment.
-	 *
-	 * @param {String} body
-	 * @return {Function|undefined}
-	 */
-
-	function makeSetter (body) {
-	  try {
-	    return new Function('scope', 'value', body + '=value;')
-	  } catch (e) {
-	    _.warn('Invalid setter function body: ' + body)
-	  }
-	}
-
-	/**
-	 * Check for setter existence on a cache hit.
-	 *
-	 * @param {Function} hit
-	 */
-
-	function checkSetter (hit) {
-	  if (!hit.set) {
-	    hit.set = makeSetter(hit.body)
-	  }
-	}
-
-	/**
-	 * Parse an expression into re-written getter/setters.
-	 *
-	 * @param {String} exp
-	 * @param {Boolean} needSet
-	 * @return {Function}
-	 */
-
-	exports.parse = function (exp, needSet) {
-	  exp = exp.trim()
-	  // try cache
-	  var hit = expressionCache.get(exp)
-	  if (hit) {
-	    if (needSet) {
-	      checkSetter(hit)
-	    }
-	    return hit
-	  }
-	  // we do a simple path check to optimize for them.
-	  // the check fails valid paths with unusal whitespaces,
-	  // but that's too rare and we don't care.
-	  var res = pathTestRE.test(exp)
-	    ? compilePathFns(exp)
-	    : compileExpFns(exp, needSet)
-	  expressionCache.put(exp, res)
-	  return res
-	}
-
-	// Export the pathRegex for external use
-	exports.pathTestRE = pathTestRE
 
 /***/ },
 /* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var applyCSSTransition = __webpack_require__(73)
-	var applyJSTransition = __webpack_require__(74)
-
-	/**
-	 * Append with transition.
-	 *
-	 * @oaram {Element} el
-	 * @param {Element} target
-	 * @param {Vue} vm
-	 * @param {Function} [cb]
-	 */
-
-	exports.append = function (el, target, vm, cb) {
-	  apply(el, 1, function () {
-	    target.appendChild(el)
-	  }, vm, cb)
-	}
-
-	/**
-	 * InsertBefore with transition.
-	 *
-	 * @oaram {Element} el
-	 * @param {Element} target
-	 * @param {Vue} vm
-	 * @param {Function} [cb]
-	 */
-
-	exports.before = function (el, target, vm, cb) {
-	  apply(el, 1, function () {
-	    _.before(el, target)
-	  }, vm, cb)
-	}
-
-	/**
-	 * Remove with transition.
-	 *
-	 * @oaram {Element} el
-	 * @param {Vue} vm
-	 * @param {Function} [cb]
-	 */
-
-	exports.remove = function (el, vm, cb) {
-	  apply(el, -1, function () {
-	    _.remove(el)
-	  }, vm, cb)
-	}
-
-	/**
-	 * Remove by appending to another parent with transition.
-	 * This is only used in block operations.
-	 *
-	 * @oaram {Element} el
-	 * @param {Element} target
-	 * @param {Vue} vm
-	 * @param {Function} [cb]
-	 */
-
-	exports.removeThenAppend = function (el, target, vm, cb) {
-	  apply(el, -1, function () {
-	    target.appendChild(el)
-	  }, vm, cb)
-	}
-
-	/**
-	 * Append the childNodes of a fragment to target.
-	 *
-	 * @param {DocumentFragment} block
-	 * @param {Node} target
-	 * @param {Vue} vm
-	 */
-
-	exports.blockAppend = function (block, target, vm) {
-	  var nodes = _.toArray(block.childNodes)
-	  for (var i = 0, l = nodes.length; i < l; i++) {
-	    exports.before(nodes[i], target, vm)
-	  }
-	}
-
-	/**
-	 * Remove a block of nodes between two edge nodes.
-	 *
-	 * @param {Node} start
-	 * @param {Node} end
-	 * @param {Vue} vm
-	 */
-
-	exports.blockRemove = function (start, end, vm) {
-	  var node = start.nextSibling
-	  var next
-	  while (node !== end) {
-	    next = node.nextSibling
-	    exports.remove(node, vm)
-	    node = next
-	  }
-	}
-
-	/**
-	 * Apply transitions with an operation callback.
-	 *
-	 * @oaram {Element} el
-	 * @param {Number} direction
-	 *                  1: enter
-	 *                 -1: leave
-	 * @param {Function} op - the actual DOM operation
-	 * @param {Vue} vm
-	 * @param {Function} [cb]
-	 */
-
-	var apply = exports.apply = function (el, direction, op, vm, cb) {
-	  var transData = el.__v_trans
-	  if (
-	    !transData ||
-	    !vm._isCompiled ||
-	    // if the vm is being manipulated by a parent directive
-	    // during the parent's compilation phase, skip the
-	    // animation.
-	    (vm.$parent && !vm.$parent._isCompiled)
-	  ) {
-	    op()
-	    if (cb) cb()
-	    return
-	  }
-	  // determine the transition type on the element
-	  var jsTransition = vm.$options.transitions[transData.id]
-	  if (jsTransition) {
-	    // js
-	    applyJSTransition(
-	      el,
-	      direction,
-	      op,
-	      transData,
-	      jsTransition,
-	      vm,
-	      cb
-	    )
-	  } else if (_.transitionEndEvent) {
-	    // css
-	    applyCSSTransition(
-	      el,
-	      direction,
-	      op,
-	      transData,
-	      cb
-	    )
-	  } else {
-	    // not applicable
-	    op()
-	    if (cb) cb()
-	  }
-	}
-
-/***/ },
-/* 59 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var _ = __webpack_require__(12)
-	var config = __webpack_require__(33)
-	var textParser = __webpack_require__(55)
-	var dirParser = __webpack_require__(56)
-	var templateParser = __webpack_require__(71)
+	var _ = __webpack_require__(14)
+	var config = __webpack_require__(35)
+	var textParser = __webpack_require__(63)
+	var dirParser = __webpack_require__(64)
+	var templateParser = __webpack_require__(72)
 
 	/**
 	 * Compile a template and return a reusable composite link
@@ -9286,11 +8394,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 60 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var templateParser = __webpack_require__(71)
+	var _ = __webpack_require__(14)
+	var templateParser = __webpack_require__(72)
 
 	/**
 	 * Process an element or a DocumentFragment based on a
@@ -9454,16 +8562,172 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(14)
+	var applyCSSTransition = __webpack_require__(82)
+	var applyJSTransition = __webpack_require__(83)
+
+	/**
+	 * Append with transition.
+	 *
+	 * @oaram {Element} el
+	 * @param {Element} target
+	 * @param {Vue} vm
+	 * @param {Function} [cb]
+	 */
+
+	exports.append = function (el, target, vm, cb) {
+	  apply(el, 1, function () {
+	    target.appendChild(el)
+	  }, vm, cb)
+	}
+
+	/**
+	 * InsertBefore with transition.
+	 *
+	 * @oaram {Element} el
+	 * @param {Element} target
+	 * @param {Vue} vm
+	 * @param {Function} [cb]
+	 */
+
+	exports.before = function (el, target, vm, cb) {
+	  apply(el, 1, function () {
+	    _.before(el, target)
+	  }, vm, cb)
+	}
+
+	/**
+	 * Remove with transition.
+	 *
+	 * @oaram {Element} el
+	 * @param {Vue} vm
+	 * @param {Function} [cb]
+	 */
+
+	exports.remove = function (el, vm, cb) {
+	  apply(el, -1, function () {
+	    _.remove(el)
+	  }, vm, cb)
+	}
+
+	/**
+	 * Remove by appending to another parent with transition.
+	 * This is only used in block operations.
+	 *
+	 * @oaram {Element} el
+	 * @param {Element} target
+	 * @param {Vue} vm
+	 * @param {Function} [cb]
+	 */
+
+	exports.removeThenAppend = function (el, target, vm, cb) {
+	  apply(el, -1, function () {
+	    target.appendChild(el)
+	  }, vm, cb)
+	}
+
+	/**
+	 * Append the childNodes of a fragment to target.
+	 *
+	 * @param {DocumentFragment} block
+	 * @param {Node} target
+	 * @param {Vue} vm
+	 */
+
+	exports.blockAppend = function (block, target, vm) {
+	  var nodes = _.toArray(block.childNodes)
+	  for (var i = 0, l = nodes.length; i < l; i++) {
+	    exports.before(nodes[i], target, vm)
+	  }
+	}
+
+	/**
+	 * Remove a block of nodes between two edge nodes.
+	 *
+	 * @param {Node} start
+	 * @param {Node} end
+	 * @param {Vue} vm
+	 */
+
+	exports.blockRemove = function (start, end, vm) {
+	  var node = start.nextSibling
+	  var next
+	  while (node !== end) {
+	    next = node.nextSibling
+	    exports.remove(node, vm)
+	    node = next
+	  }
+	}
+
+	/**
+	 * Apply transitions with an operation callback.
+	 *
+	 * @oaram {Element} el
+	 * @param {Number} direction
+	 *                  1: enter
+	 *                 -1: leave
+	 * @param {Function} op - the actual DOM operation
+	 * @param {Vue} vm
+	 * @param {Function} [cb]
+	 */
+
+	var apply = exports.apply = function (el, direction, op, vm, cb) {
+	  var transData = el.__v_trans
+	  if (
+	    !transData ||
+	    !vm._isCompiled ||
+	    // if the vm is being manipulated by a parent directive
+	    // during the parent's compilation phase, skip the
+	    // animation.
+	    (vm.$parent && !vm.$parent._isCompiled)
+	  ) {
+	    op()
+	    if (cb) cb()
+	    return
+	  }
+	  // determine the transition type on the element
+	  var jsTransition = vm.$options.transitions[transData.id]
+	  if (jsTransition) {
+	    // js
+	    applyJSTransition(
+	      el,
+	      direction,
+	      op,
+	      transData,
+	      jsTransition,
+	      vm,
+	      cb
+	    )
+	  } else if (_.transitionEndEvent) {
+	    // css
+	    applyCSSTransition(
+	      el,
+	      direction,
+	      op,
+	      transData,
+	      cb
+	    )
+	  } else {
+	    // not applicable
+	    op()
+	    if (cb) cb()
+	  }
+	}
+
+/***/ },
 /* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 
 	var handlers = {
-	  _default: __webpack_require__(75),
-	  radio: __webpack_require__(76),
-	  select: __webpack_require__(77),
-	  checkbox: __webpack_require__(78)
+	  _default: __webpack_require__(78),
+	  radio: __webpack_require__(79),
+	  select: __webpack_require__(80),
+	  checkbox: __webpack_require__(81)
 	}
 
 	module.exports = {
@@ -9518,12 +8782,895 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-	var config = __webpack_require__(33)
-	var Binding = __webpack_require__(53)
-	var arrayMethods = __webpack_require__(79)
+	var _ = __webpack_require__(14)
+	var Cache = __webpack_require__(84)
+	var pathCache = new Cache(1000)
+	var identRE = /^[$_a-zA-Z]+[\w$]*$/
+
+	/**
+	 * Path-parsing algorithm scooped from Polymer/observe-js
+	 */
+
+	var pathStateMachine = {
+	  'beforePath': {
+	    'ws': ['beforePath'],
+	    'ident': ['inIdent', 'append'],
+	    '[': ['beforeElement'],
+	    'eof': ['afterPath']
+	  },
+
+	  'inPath': {
+	    'ws': ['inPath'],
+	    '.': ['beforeIdent'],
+	    '[': ['beforeElement'],
+	    'eof': ['afterPath']
+	  },
+
+	  'beforeIdent': {
+	    'ws': ['beforeIdent'],
+	    'ident': ['inIdent', 'append']
+	  },
+
+	  'inIdent': {
+	    'ident': ['inIdent', 'append'],
+	    '0': ['inIdent', 'append'],
+	    'number': ['inIdent', 'append'],
+	    'ws': ['inPath', 'push'],
+	    '.': ['beforeIdent', 'push'],
+	    '[': ['beforeElement', 'push'],
+	    'eof': ['afterPath', 'push']
+	  },
+
+	  'beforeElement': {
+	    'ws': ['beforeElement'],
+	    '0': ['afterZero', 'append'],
+	    'number': ['inIndex', 'append'],
+	    "'": ['inSingleQuote', 'append', ''],
+	    '"': ['inDoubleQuote', 'append', '']
+	  },
+
+	  'afterZero': {
+	    'ws': ['afterElement', 'push'],
+	    ']': ['inPath', 'push']
+	  },
+
+	  'inIndex': {
+	    '0': ['inIndex', 'append'],
+	    'number': ['inIndex', 'append'],
+	    'ws': ['afterElement'],
+	    ']': ['inPath', 'push']
+	  },
+
+	  'inSingleQuote': {
+	    "'": ['afterElement'],
+	    'eof': 'error',
+	    'else': ['inSingleQuote', 'append']
+	  },
+
+	  'inDoubleQuote': {
+	    '"': ['afterElement'],
+	    'eof': 'error',
+	    'else': ['inDoubleQuote', 'append']
+	  },
+
+	  'afterElement': {
+	    'ws': ['afterElement'],
+	    ']': ['inPath', 'push']
+	  }
+	}
+
+	function noop () {}
+
+	/**
+	 * Determine the type of a character in a keypath.
+	 *
+	 * @param {Char} char
+	 * @return {String} type
+	 */
+
+	function getPathCharType (char) {
+	  if (char === undefined) {
+	    return 'eof'
+	  }
+
+	  var code = char.charCodeAt(0)
+
+	  switch(code) {
+	    case 0x5B: // [
+	    case 0x5D: // ]
+	    case 0x2E: // .
+	    case 0x22: // "
+	    case 0x27: // '
+	    case 0x30: // 0
+	      return char
+
+	    case 0x5F: // _
+	    case 0x24: // $
+	      return 'ident'
+
+	    case 0x20: // Space
+	    case 0x09: // Tab
+	    case 0x0A: // Newline
+	    case 0x0D: // Return
+	    case 0xA0:  // No-break space
+	    case 0xFEFF:  // Byte Order Mark
+	    case 0x2028:  // Line Separator
+	    case 0x2029:  // Paragraph Separator
+	      return 'ws'
+	  }
+
+	  // a-z, A-Z
+	  if ((0x61 <= code && code <= 0x7A) ||
+	      (0x41 <= code && code <= 0x5A)) {
+	    return 'ident'
+	  }
+
+	  // 1-9
+	  if (0x31 <= code && code <= 0x39) {
+	    return 'number'
+	  }
+
+	  return 'else'
+	}
+
+	/**
+	 * Parse a string path into an array of segments
+	 * Todo implement cache
+	 *
+	 * @param {String} path
+	 * @return {Array|undefined}
+	 */
+
+	function parsePath (path) {
+	  var keys = []
+	  var index = -1
+	  var mode = 'beforePath'
+	  var c, newChar, key, type, transition, action, typeMap
+
+	  var actions = {
+	    push: function() {
+	      if (key === undefined) {
+	        return
+	      }
+	      keys.push(key)
+	      key = undefined
+	    },
+	    append: function() {
+	      if (key === undefined) {
+	        key = newChar
+	      } else {
+	        key += newChar
+	      }
+	    }
+	  }
+
+	  function maybeUnescapeQuote () {
+	    var nextChar = path[index + 1]
+	    if ((mode === 'inSingleQuote' && nextChar === "'") ||
+	        (mode === 'inDoubleQuote' && nextChar === '"')) {
+	      index++
+	      newChar = nextChar
+	      actions.append()
+	      return true
+	    }
+	  }
+
+	  while (mode) {
+	    index++
+	    c = path[index]
+
+	    if (c === '\\' && maybeUnescapeQuote()) {
+	      continue
+	    }
+
+	    type = getPathCharType(c)
+	    typeMap = pathStateMachine[mode]
+	    transition = typeMap[type] || typeMap['else'] || 'error'
+
+	    if (transition === 'error') {
+	      return // parse error
+	    }
+
+	    mode = transition[0]
+	    action = actions[transition[1]] || noop
+	    newChar = transition[2] === undefined
+	      ? c
+	      : transition[2]
+	    action()
+
+	    if (mode === 'afterPath') {
+	      return keys
+	    }
+	  }
+	}
+
+	/**
+	 * Format a accessor segment based on its type.
+	 *
+	 * @param {String} key
+	 * @return {Boolean}
+	 */
+
+	function formatAccessor(key) {
+	  if (identRE.test(key)) { // identifier
+	    return '.' + key
+	  } else if (+key === key >>> 0) { // bracket index
+	    return '[' + key + ']';
+	  } else { // bracket string
+	    return '["' + key.replace(/"/g, '\\"') + '"]';
+	  }
+	}
+
+	/**
+	 * Compiles a getter function with a fixed path.
+	 *
+	 * @param {Array} path
+	 * @return {Function}
+	 */
+
+	exports.compileGetter = function (path) {
+	  var body =
+	    'try{return o' +
+	    path.map(formatAccessor).join('') +
+	    '}catch(e){};'
+	  return new Function('o', body)
+	}
+
+	/**
+	 * External parse that check for a cache hit first
+	 *
+	 * @param {String} path
+	 * @return {Array|undefined}
+	 */
+
+	exports.parse = function (path) {
+	  var hit = pathCache.get(path)
+	  if (!hit) {
+	    hit = parsePath(path)
+	    if (hit) {
+	      hit.get = exports.compileGetter(hit)
+	      pathCache.put(path, hit)
+	    }
+	  }
+	  return hit
+	}
+
+	/**
+	 * Get from an object from a path string
+	 *
+	 * @param {Object} obj
+	 * @param {String} path
+	 */
+
+	exports.get = function (obj, path) {
+	  path = exports.parse(path)
+	  if (path) {
+	    return path.get(obj)
+	  }
+	}
+
+	/**
+	 * Set on an object from a path
+	 *
+	 * @param {Object} obj
+	 * @param {String | Array} path
+	 * @param {*} val
+	 */
+
+	exports.set = function (obj, path, val) {
+	  if (typeof path === 'string') {
+	    path = exports.parse(path)
+	  }
+	  if (!path || !_.isObject(obj)) {
+	    return false
+	  }
+	  var last, key
+	  for (var i = 0, l = path.length - 1; i < l; i++) {
+	    last = obj
+	    key = path[i]
+	    obj = obj[key]
+	    if (!_.isObject(obj)) {
+	      obj = {}
+	      last.$add(key, obj)
+	    }
+	  }
+	  key = path[i]
+	  if (key in obj) {
+	    obj[key] = val
+	  } else {
+	    obj.$add(key, val)
+	  }
+	  return true
+	}
+
+/***/ },
+/* 63 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Cache = __webpack_require__(84)
+	var config = __webpack_require__(35)
+	var dirParser = __webpack_require__(64)
+	var regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g
+	var cache, tagRE, htmlRE, firstChar, lastChar
+
+	/**
+	 * Escape a string so it can be used in a RegExp
+	 * constructor.
+	 *
+	 * @param {String} str
+	 */
+
+	function escapeRegex (str) {
+	  return str.replace(regexEscapeRE, '\\$&')
+	}
+
+	/**
+	 * Compile the interpolation tag regex.
+	 *
+	 * @return {RegExp}
+	 */
+
+	function compileRegex () {
+	  config._delimitersChanged = false
+	  var open = config.delimiters[0]
+	  var close = config.delimiters[1]
+	  firstChar = open.charAt(0)
+	  lastChar = close.charAt(close.length - 1)
+	  var firstCharRE = escapeRegex(firstChar)
+	  var lastCharRE = escapeRegex(lastChar)
+	  var openRE = escapeRegex(open)
+	  var closeRE = escapeRegex(close)
+	  tagRE = new RegExp(
+	    firstCharRE + '?' + openRE +
+	    '(.+?)' +
+	    closeRE + lastCharRE + '?',
+	    'g'
+	  )
+	  htmlRE = new RegExp(
+	    '^' + firstCharRE + openRE +
+	    '.*' +
+	    closeRE + lastCharRE + '$'
+	  )
+	  // reset cache
+	  cache = new Cache(1000)
+	}
+
+	/**
+	 * Parse a template text string into an array of tokens.
+	 *
+	 * @param {String} text
+	 * @return {Array<Object> | null}
+	 *               - {String} type
+	 *               - {String} value
+	 *               - {Boolean} [html]
+	 *               - {Boolean} [oneTime]
+	 */
+
+	exports.parse = function (text) {
+	  if (config._delimitersChanged) {
+	    compileRegex()
+	  }
+	  var hit = cache.get(text)
+	  if (hit) {
+	    return hit
+	  }
+	  if (!tagRE.test(text)) {
+	    return null
+	  }
+	  var tokens = []
+	  var lastIndex = tagRE.lastIndex = 0
+	  var match, index, value, first, oneTime, partial
+	  /* jshint boss:true */
+	  while (match = tagRE.exec(text)) {
+	    index = match.index
+	    // push text token
+	    if (index > lastIndex) {
+	      tokens.push({
+	        value: text.slice(lastIndex, index)
+	      })
+	    }
+	    // tag token
+	    first = match[1].charCodeAt(0)
+	    oneTime = first === 0x2A // *
+	    partial = first === 0x3E // >
+	    value = (oneTime || partial)
+	      ? match[1].slice(1)
+	      : match[1]
+	    tokens.push({
+	      tag: true,
+	      value: value.trim(),
+	      html: htmlRE.test(match[0]),
+	      oneTime: oneTime,
+	      partial: partial
+	    })
+	    lastIndex = index + match[0].length
+	  }
+	  if (lastIndex < text.length) {
+	    tokens.push({
+	      value: text.slice(lastIndex)
+	    })
+	  }
+	  cache.put(text, tokens)
+	  return tokens
+	}
+
+	/**
+	 * Format a list of tokens into an expression.
+	 * e.g. tokens parsed from 'a {{b}} c' can be serialized
+	 * into one single expression as '"a " + b + " c"'.
+	 *
+	 * @param {Array} tokens
+	 * @param {Vue} [vm]
+	 * @return {String}
+	 */
+
+	exports.tokensToExp = function (tokens, vm) {
+	  return tokens.length > 1
+	    ? tokens.map(function (token) {
+	        return formatToken(token, vm)
+	      }).join('+')
+	    : formatToken(tokens[0], vm, true)
+	}
+
+	/**
+	 * Format a single token.
+	 *
+	 * @param {Object} token
+	 * @param {Vue} [vm]
+	 * @param {Boolean} single
+	 * @return {String}
+	 */
+
+	function formatToken (token, vm, single) {
+	  return token.tag
+	    ? vm && token.oneTime
+	      ? '"' + vm.$eval(token.value) + '"'
+	      : single
+	        ? token.value
+	        : inlineFilters(token.value)
+	    : '"' + token.value + '"'
+	}
+
+	/**
+	 * For an attribute with multiple interpolation tags,
+	 * e.g. attr="some-{{thing | filter}}", in order to combine
+	 * the whole thing into a single watchable expression, we
+	 * have to inline those filters. This function does exactly
+	 * that. This is a bit hacky but it avoids heavy changes
+	 * to directive parser and watcher mechanism.
+	 *
+	 * @param {String} exp
+	 * @return {String}
+	 */
+
+	var filterRE = /[^|]\|[^|]/
+	function inlineFilters (exp) {
+	  if (!filterRE.test(exp)) {
+	    return '(' + exp + ')'
+	  } else {
+	    var dir = dirParser.parse(exp)[0]
+	    if (!dir.filters) {
+	      return '(' + exp + ')'
+	    } else {
+	      exp = dir.expression
+	      for (var i = 0, l = dir.filters.length; i < l; i++) {
+	        var filter = dir.filters[i]
+	        var args = filter.args
+	          ? ',"' + filter.args.join('","') + '"'
+	          : ''
+	        exp = 'this.$options.filters["' + filter.name + '"]' +
+	          '.apply(this,[' + exp + args + '])'
+	      }
+	      return exp
+	    }
+	  }
+	}
+
+/***/ },
+/* 64 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(14)
+	var Cache = __webpack_require__(84)
+	var cache = new Cache(1000)
+	var argRE = /^[^\{\?]+$|^'[^']*'$|^"[^"]*"$/
+	var filterTokenRE = /[^\s'"]+|'[^']+'|"[^"]+"/g
+
+	/**
+	 * Parser state
+	 */
+
+	var str
+	var c, i, l
+	var inSingle
+	var inDouble
+	var curly
+	var square
+	var paren
+	var begin
+	var argIndex
+	var dirs
+	var dir
+	var lastFilterIndex
+	var arg
+
+	/**
+	 * Push a directive object into the result Array
+	 */
+
+	function pushDir () {
+	  dir.raw = str.slice(begin, i).trim()
+	  if (dir.expression === undefined) {
+	    dir.expression = str.slice(argIndex, i).trim()
+	  } else if (lastFilterIndex !== begin) {
+	    pushFilter()
+	  }
+	  if (i === 0 || dir.expression) {
+	    dirs.push(dir)
+	  }
+	}
+
+	/**
+	 * Push a filter to the current directive object
+	 */
+
+	function pushFilter () {
+	  var exp = str.slice(lastFilterIndex, i).trim()
+	  var filter
+	  if (exp) {
+	    filter = {}
+	    var tokens = exp.match(filterTokenRE)
+	    filter.name = tokens[0]
+	    filter.args = tokens.length > 1 ? tokens.slice(1) : null
+	  }
+	  if (filter) {
+	    (dir.filters = dir.filters || []).push(filter)
+	  }
+	  lastFilterIndex = i + 1
+	}
+
+	/**
+	 * Parse a directive string into an Array of AST-like
+	 * objects representing directives.
+	 *
+	 * Example:
+	 *
+	 * "click: a = a + 1 | uppercase" will yield:
+	 * {
+	 *   arg: 'click',
+	 *   expression: 'a = a + 1',
+	 *   filters: [
+	 *     { name: 'uppercase', args: null }
+	 *   ]
+	 * }
+	 *
+	 * @param {String} str
+	 * @return {Array<Object>}
+	 */
+
+	exports.parse = function (s) {
+
+	  var hit = cache.get(s)
+	  if (hit) {
+	    return hit
+	  }
+
+	  // reset parser state
+	  str = s
+	  inSingle = inDouble = false
+	  curly = square = paren = begin = argIndex = 0
+	  lastFilterIndex = 0
+	  dirs = []
+	  dir = {}
+	  arg = null
+
+	  for (i = 0, l = str.length; i < l; i++) {
+	    c = str.charCodeAt(i)
+	    if (inSingle) {
+	      // check single quote
+	      if (c === 0x27) inSingle = !inSingle
+	    } else if (inDouble) {
+	      // check double quote
+	      if (c === 0x22) inDouble = !inDouble
+	    } else if (
+	      c === 0x2C && // comma
+	      !paren && !curly && !square
+	    ) {
+	      // reached the end of a directive
+	      pushDir()
+	      // reset & skip the comma
+	      dir = {}
+	      begin = argIndex = lastFilterIndex = i + 1
+	    } else if (
+	      c === 0x3A && // colon
+	      !dir.expression &&
+	      !dir.arg
+	    ) {
+	      // argument
+	      arg = str.slice(begin, i).trim()
+	      // test for valid argument here
+	      // since we may have caught stuff like first half of
+	      // an object literal or a ternary expression.
+	      if (argRE.test(arg)) {
+	        argIndex = i + 1
+	        dir.arg = _.stripQuotes(arg) || arg
+	      }
+	    } else if (
+	      c === 0x7C && // pipe
+	      str.charCodeAt(i + 1) !== 0x7C &&
+	      str.charCodeAt(i - 1) !== 0x7C
+	    ) {
+	      if (dir.expression === undefined) {
+	        // first filter, end of expression
+	        lastFilterIndex = i + 1
+	        dir.expression = str.slice(argIndex, i).trim()
+	      } else {
+	        // already has filter
+	        pushFilter()
+	      }
+	    } else {
+	      switch (c) {
+	        case 0x22: inDouble = true; break // "
+	        case 0x27: inSingle = true; break // '
+	        case 0x28: paren++; break         // (
+	        case 0x29: paren--; break         // )
+	        case 0x5B: square++; break        // [
+	        case 0x5D: square--; break        // ]
+	        case 0x7B: curly++; break         // {
+	        case 0x7D: curly--; break         // }
+	      }
+	    }
+	  }
+
+	  if (i === 0 || begin !== i) {
+	    pushDir()
+	  }
+
+	  cache.put(s, dirs)
+	  return dirs
+	}
+
+/***/ },
+/* 65 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(14)
+	var Path = __webpack_require__(62)
+	var Cache = __webpack_require__(84)
+	var expressionCache = new Cache(1000)
+
+	var keywords =
+	  'Math,break,case,catch,continue,debugger,default,' +
+	  'delete,do,else,false,finally,for,function,if,in,' +
+	  'instanceof,new,null,return,switch,this,throw,true,try,' +
+	  'typeof,var,void,while,with,undefined,abstract,boolean,' +
+	  'byte,char,class,const,double,enum,export,extends,' +
+	  'final,float,goto,implements,import,int,interface,long,' +
+	  'native,package,private,protected,public,short,static,' +
+	  'super,synchronized,throws,transient,volatile,' +
+	  'arguments,let,yield'
+
+	var wsRE = /\s/g
+	var newlineRE = /\n/g
+	var saveRE = /[\{,]\s*[\w\$_]+\s*:|'[^']*'|"[^"]*"/g
+	var restoreRE = /"(\d+)"/g
+	var pathTestRE = /^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*|\['.*?'\]|\[".*?"\])*$/
+	var pathReplaceRE = /[^\w$\.]([A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*|\['.*?'\]|\[".*?"\])*)/g
+	var keywordsRE = new RegExp('^(' + keywords.replace(/,/g, '\\b|') + '\\b)')
+
+	/**
+	 * Save / Rewrite / Restore
+	 *
+	 * When rewriting paths found in an expression, it is
+	 * possible for the same letter sequences to be found in
+	 * strings and Object literal property keys. Therefore we
+	 * remove and store these parts in a temporary array, and
+	 * restore them after the path rewrite.
+	 */
+
+	var saved = []
+
+	/**
+	 * Save replacer
+	 *
+	 * @param {String} str
+	 * @return {String} - placeholder with index
+	 */
+
+	function save (str) {
+	  var i = saved.length
+	  saved[i] = str.replace(newlineRE, '\\n')
+	  return '"' + i + '"'
+	}
+
+	/**
+	 * Path rewrite replacer
+	 *
+	 * @param {String} raw
+	 * @return {String}
+	 */
+
+	function rewrite (raw) {
+	  var c = raw.charAt(0)
+	  var path = raw.slice(1)
+	  if (keywordsRE.test(path)) {
+	    return raw
+	  } else {
+	    path = path.indexOf('"') > -1
+	      ? path.replace(restoreRE, restore)
+	      : path
+	    return c + 'scope.' + path
+	  }
+	}
+
+	/**
+	 * Restore replacer
+	 *
+	 * @param {String} str
+	 * @param {String} i - matched save index
+	 * @return {String}
+	 */
+
+	function restore (str, i) {
+	  return saved[i]
+	}
+
+	/**
+	 * Rewrite an expression, prefixing all path accessors with
+	 * `scope.` and generate getter/setter functions.
+	 *
+	 * @param {String} exp
+	 * @param {Boolean} needSet
+	 * @return {Function}
+	 */
+
+	function compileExpFns (exp, needSet) {
+	  // reset state
+	  saved.length = 0
+	  // save strings and object literal keys
+	  var body = exp
+	    .replace(saveRE, save)
+	    .replace(wsRE, '')
+	  // rewrite all paths
+	  // pad 1 space here becaue the regex matches 1 extra char
+	  body = (' ' + body)
+	    .replace(pathReplaceRE, rewrite)
+	    .replace(restoreRE, restore)
+	  var getter = makeGetter(body)
+	  if (getter) {
+	    return {
+	      get: getter,
+	      body: body,
+	      set: needSet
+	        ? makeSetter(body)
+	        : null
+	    }
+	  }
+	}
+
+	/**
+	 * Compile getter setters for a simple path.
+	 *
+	 * @param {String} exp
+	 * @return {Function}
+	 */
+
+	function compilePathFns (exp) {
+	  var getter, path
+	  if (exp.indexOf('[') < 0) {
+	    // really simple path
+	    path = exp.split('.')
+	    getter = Path.compileGetter(path)
+	  } else {
+	    // do the real parsing
+	    path = Path.parse(exp)
+	    getter = path.get
+	  }
+	  return {
+	    get: getter,
+	    // always generate setter for simple paths
+	    set: function (obj, val) {
+	      Path.set(obj, path, val)
+	    }
+	  }
+	}
+
+	/**
+	 * Build a getter function. Requires eval.
+	 *
+	 * We isolate the try/catch so it doesn't affect the
+	 * optimization of the parse function when it is not called.
+	 *
+	 * @param {String} body
+	 * @return {Function|undefined}
+	 */
+
+	function makeGetter (body) {
+	  try {
+	    return new Function('scope', 'return ' + body + ';')
+	  } catch (e) {
+	    _.warn(
+	      'Invalid expression. ' + 
+	      'Generated function body: ' + body
+	    )
+	  }
+	}
+
+	/**
+	 * Build a setter function.
+	 *
+	 * This is only needed in rare situations like "a[b]" where
+	 * a settable path requires dynamic evaluation.
+	 *
+	 * This setter function may throw error when called if the
+	 * expression body is not a valid left-hand expression in
+	 * assignment.
+	 *
+	 * @param {String} body
+	 * @return {Function|undefined}
+	 */
+
+	function makeSetter (body) {
+	  try {
+	    return new Function('scope', 'value', body + '=value;')
+	  } catch (e) {
+	    _.warn('Invalid setter function body: ' + body)
+	  }
+	}
+
+	/**
+	 * Check for setter existence on a cache hit.
+	 *
+	 * @param {Function} hit
+	 */
+
+	function checkSetter (hit) {
+	  if (!hit.set) {
+	    hit.set = makeSetter(hit.body)
+	  }
+	}
+
+	/**
+	 * Parse an expression into re-written getter/setters.
+	 *
+	 * @param {String} exp
+	 * @param {Boolean} needSet
+	 * @return {Function}
+	 */
+
+	exports.parse = function (exp, needSet) {
+	  exp = exp.trim()
+	  // try cache
+	  var hit = expressionCache.get(exp)
+	  if (hit) {
+	    if (needSet) {
+	      checkSetter(hit)
+	    }
+	    return hit
+	  }
+	  // we do a simple path check to optimize for them.
+	  // the check fails valid paths with unusal whitespaces,
+	  // but that's too rare and we don't care.
+	  var res = pathTestRE.test(exp)
+	    ? compilePathFns(exp)
+	    : compileExpFns(exp, needSet)
+	  expressionCache.put(exp, res)
+	  return res
+	}
+
+	// Export the pathRegex for external use
+	exports.pathTestRE = pathTestRE
+
+/***/ },
+/* 66 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(14)
+	var config = __webpack_require__(35)
+	var Binding = __webpack_require__(54)
+	var arrayMethods = __webpack_require__(91)
 	var arrayKeys = Object.getOwnPropertyNames(arrayMethods)
-	__webpack_require__(80)
+	__webpack_require__(92)
 
 	var uid = 0
 
@@ -9756,94 +9903,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 63 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var assign        = __webpack_require__(87)
-	  , normalizeOpts = __webpack_require__(83)
-	  , isCallable    = __webpack_require__(84)
-	  , contains      = __webpack_require__(97)
-
-	  , d;
-
-	d = module.exports = function (dscr, value/*, options*/) {
-		var c, e, w, options, desc;
-		if ((arguments.length < 2) || (typeof dscr !== 'string')) {
-			options = value;
-			value = dscr;
-			dscr = null;
-		} else {
-			options = arguments[2];
-		}
-		if (dscr == null) {
-			c = w = true;
-			e = false;
-		} else {
-			c = contains.call(dscr, 'c');
-			e = contains.call(dscr, 'e');
-			w = contains.call(dscr, 'w');
-		}
-
-		desc = { value: value, configurable: c, enumerable: e, writable: w };
-		return !options ? desc : assign(normalizeOpts(options), desc);
-	};
-
-	d.gs = function (dscr, get, set/*, options*/) {
-		var c, e, options, desc;
-		if (typeof dscr !== 'string') {
-			options = set;
-			set = get;
-			get = dscr;
-			dscr = null;
-		} else {
-			options = arguments[3];
-		}
-		if (get == null) {
-			get = undefined;
-		} else if (!isCallable(get)) {
-			options = get;
-			get = set = undefined;
-		} else if (set == null) {
-			set = undefined;
-		} else if (!isCallable(set)) {
-			options = set;
-			set = undefined;
-		}
-		if (dscr == null) {
-			c = true;
-			e = false;
-		} else {
-			c = contains.call(dscr, 'c');
-			e = contains.call(dscr, 'e');
-		}
-
-		desc = { get: get, set: set, configurable: c, enumerable: e };
-		return !options ? desc : assign(normalizeOpts(options), desc);
-	};
-
-
-/***/ },
-/* 64 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(85)() ? Symbol : __webpack_require__(86);
-
-
-/***/ },
-/* 65 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var isString = __webpack_require__(96)
-	  , ArrayIterator  = __webpack_require__(88)
-	  , StringIterator = __webpack_require__(89)
-	  , iterable       = __webpack_require__(90)
-	  , iteratorSymbol = __webpack_require__(64).iterator;
+	var isString = __webpack_require__(95)
+	  , ArrayIterator  = __webpack_require__(86)
+	  , StringIterator = __webpack_require__(87)
+	  , iterable       = __webpack_require__(88)
+	  , iteratorSymbol = __webpack_require__(57).iterator;
 
 	module.exports = function (obj) {
 		if (typeof iterable(obj)[iteratorSymbol] === 'function') return obj[iteratorSymbol]();
@@ -9853,14 +9922,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 66 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var callable = __webpack_require__(91)
-	  , isString = __webpack_require__(96)
-	  , get      = __webpack_require__(65)
+	var callable = __webpack_require__(93)
+	  , isString = __webpack_require__(95)
+	  , get      = __webpack_require__(67)
 
 	  , isArray = Array.isArray, call = Function.prototype.call;
 
@@ -9903,12 +9972,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 67 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isObject = __webpack_require__(93);
+	var isObject = __webpack_require__(94);
 
 	module.exports = function (value) {
 		if (!isObject(value)) throw new TypeError(value + " is not an Object");
@@ -9917,7 +9986,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 68 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9929,92 +9998,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 69 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(94)()
+	module.exports = __webpack_require__(97)()
 		? Object.setPrototypeOf
-		: __webpack_require__(95);
+		: __webpack_require__(98);
 
 
 /***/ },
-/* 70 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-
-	/**
-	 * The Batcher maintains a job queue to be run
-	 * async on the next event loop.
-	 */
-
-	function Batcher () {
-	  this.reset()
-	}
-
-	var p = Batcher.prototype
-
-	/**
-	 * Push a job into the job queue.
-	 * Jobs with duplicate IDs will be skipped unless it's
-	 * pushed when the queue is being flushed.
-	 *
-	 * @param {Object} job
-	 *   properties:
-	 *   - {String|Number} id
-	 *   - {Function}      run
-	 */
-
-	p.push = function (job) {
-	  if (!job.id || !this.has[job.id] || this.flushing) {
-	    this.queue.push(job)
-	    this.has[job.id] = job
-	    if (!this.waiting) {
-	      this.waiting = true
-	      _.nextTick(this.flush, this)
-	    }
-	  }
-	}
-
-	/**
-	 * Flush the queue and run the jobs.
-	 * Will call a preFlush hook if has one.
-	 */
-
-	p.flush = function () {
-	  this.flushing = true
-	  // do not cache length because more jobs might be pushed
-	  // as we run existing jobs
-	  for (var i = 0; i < this.queue.length; i++) {
-	    var job = this.queue[i]
-	    if (!job.cancelled) {
-	      job.run()
-	    }
-	  }
-	  this.reset()
-	}
-
-	/**
-	 * Reset the batcher's state.
-	 */
-
-	p.reset = function () {
-	  this.has = {}
-	  this.queue = []
-	  this.waiting = false
-	  this.flushing = false
-	}
-
-	module.exports = Batcher
-
-/***/ },
-/* 71 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var _ = __webpack_require__(12)
-	var Cache = __webpack_require__(72)
+	var _ = __webpack_require__(14)
+	var Cache = __webpack_require__(84)
 	var templateCache = new Cache(100)
 
 	/**
@@ -10237,127 +10236,558 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 72 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * A doubly linked list-based Least Recently Used (LRU)
-	 * cache. Will keep most recently used items while
-	 * discarding least recently used items when its limit is
-	 * reached. This is a bare-bone version of
-	 * Rasmus Andersson's js-lru:
-	 *
-	 *   https://github.com/rsms/js-lru
-	 *
-	 * @param {Number} limit
-	 * @constructor
-	 */
-
-	function Cache (limit) {
-	  this.size = 0
-	  this.limit = limit
-	  this.head = this.tail = undefined
-	  this._keymap = {}
-	}
-
-	var p = Cache.prototype
-
-	/**
-	 * Put <value> into the cache associated with <key>.
-	 * Returns the entry which was removed to make room for
-	 * the new entry. Otherwise undefined is returned.
-	 * (i.e. if there was enough room already).
-	 *
-	 * @param {String} key
-	 * @param {*} value
-	 * @return {Entry|undefined}
-	 */
-
-	p.put = function (key, value) {
-	  var entry = {
-	    key:key,
-	    value:value
-	  }
-	  this._keymap[key] = entry
-	  if (this.tail) {
-	    this.tail.newer = entry
-	    entry.older = this.tail
-	  } else {
-	    this.head = entry
-	  }
-	  this.tail = entry
-	  if (this.size === this.limit) {
-	    return this.shift()
-	  } else {
-	    this.size++
-	  }
-	}
-
-	/**
-	 * Purge the least recently used (oldest) entry from the
-	 * cache. Returns the removed entry or undefined if the
-	 * cache was empty.
-	 */
-
-	p.shift = function () {
-	  var entry = this.head
-	  if (entry) {
-	    this.head = this.head.newer
-	    this.head.older = undefined
-	    entry.newer = entry.older = undefined
-	    this._keymap[entry.key] = undefined
-	  }
-	  return entry
-	}
-
-	/**
-	 * Get and register recent use of <key>. Returns the value
-	 * associated with <key> or undefined if not in cache.
-	 *
-	 * @param {String} key
-	 * @param {Boolean} returnEntry
-	 * @return {Entry|*}
-	 */
-
-	p.get = function (key, returnEntry) {
-	  var entry = this._keymap[key]
-	  if (entry === undefined) return
-	  if (entry === this.tail) {
-	    return returnEntry
-	      ? entry
-	      : entry.value
-	  }
-	  // HEAD--------------TAIL
-	  //   <.older   .newer>
-	  //  <--- add direction --
-	  //   A  B  C  <D>  E
-	  if (entry.newer) {
-	    if (entry === this.head) {
-	      this.head = entry.newer
-	    }
-	    entry.newer.older = entry.older // C <-- E.
-	  }
-	  if (entry.older) {
-	    entry.older.newer = entry.newer // C. --> E
-	  }
-	  entry.newer = undefined // D --x
-	  entry.older = this.tail // D. --> E
-	  if (this.tail) {
-	    this.tail.newer = entry // E. <-- D
-	  }
-	  this.tail = entry
-	  return returnEntry
-	    ? entry
-	    : entry.value
-	}
-
-	module.exports = Cache
-
-/***/ },
 /* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
+
+	/**
+	 * The Batcher maintains a job queue to be run
+	 * async on the next event loop.
+	 */
+
+	function Batcher () {
+	  this.reset()
+	}
+
+	var p = Batcher.prototype
+
+	/**
+	 * Push a job into the job queue.
+	 * Jobs with duplicate IDs will be skipped unless it's
+	 * pushed when the queue is being flushed.
+	 *
+	 * @param {Object} job
+	 *   properties:
+	 *   - {String|Number} id
+	 *   - {Function}      run
+	 */
+
+	p.push = function (job) {
+	  if (!job.id || !this.has[job.id] || this.flushing) {
+	    this.queue.push(job)
+	    this.has[job.id] = job
+	    if (!this.waiting) {
+	      this.waiting = true
+	      _.nextTick(this.flush, this)
+	    }
+	  }
+	}
+
+	/**
+	 * Flush the queue and run the jobs.
+	 * Will call a preFlush hook if has one.
+	 */
+
+	p.flush = function () {
+	  this.flushing = true
+	  // do not cache length because more jobs might be pushed
+	  // as we run existing jobs
+	  for (var i = 0; i < this.queue.length; i++) {
+	    var job = this.queue[i]
+	    if (!job.cancelled) {
+	      job.run()
+	    }
+	  }
+	  this.reset()
+	}
+
+	/**
+	 * Reset the batcher's state.
+	 */
+
+	p.reset = function () {
+	  this.has = {}
+	  this.queue = []
+	  this.waiting = false
+	  this.flushing = false
+	}
+
+	module.exports = Batcher
+
+/***/ },
+/* 74 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var assign = __webpack_require__(85)
+
+	  , forEach = Array.prototype.forEach
+	  , create = Object.create, getPrototypeOf = Object.getPrototypeOf
+
+	  , process;
+
+	process = function (src, obj) {
+		var proto = getPrototypeOf(src);
+		return assign(proto ? process(proto, obj) : obj, src);
+	};
+
+	module.exports = function (options/*, …options*/) {
+		var result = create(null);
+		forEach.call(arguments, function (options) {
+			if (options == null) return;
+			process(Object(options), result);
+		});
+		return result;
+	};
+
+
+/***/ },
+/* 75 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Deprecated
+
+	'use strict';
+
+	module.exports = function (obj) { return typeof obj === 'function'; };
+
+
+/***/ },
+/* 76 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = function () {
+		var symbol;
+		if (typeof Symbol !== 'function') return false;
+		symbol = Symbol('test symbol');
+		try { String(symbol); } catch (e) { return false; }
+		if (typeof Symbol.iterator === 'symbol') return true;
+
+		// Return 'true' for polyfills
+		if (typeof Symbol.isConcatSpreadable !== 'object') return false;
+		if (typeof Symbol.isRegExp !== 'object') return false;
+		if (typeof Symbol.iterator !== 'object') return false;
+		if (typeof Symbol.toPrimitive !== 'object') return false;
+		if (typeof Symbol.toStringTag !== 'object') return false;
+		if (typeof Symbol.unscopables !== 'object') return false;
+
+		return true;
+	};
+
+
+/***/ },
+/* 77 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var d = __webpack_require__(56)
+
+	  , create = Object.create, defineProperties = Object.defineProperties
+	  , generateName, Symbol;
+
+	generateName = (function () {
+		var created = create(null);
+		return function (desc) {
+			var postfix = 0;
+			while (created[desc + (postfix || '')]) ++postfix;
+			desc += (postfix || '');
+			created[desc] = true;
+			return '@@' + desc;
+		};
+	}());
+
+	module.exports = Symbol = function (description) {
+		var symbol;
+		if (this instanceof Symbol) {
+			throw new TypeError('TypeError: Symbol is not a constructor');
+		}
+		symbol = create(Symbol.prototype);
+		description = (description === undefined ? '' : String(description));
+		return defineProperties(symbol, {
+			__description__: d('', description),
+			__name__: d('', generateName(description))
+		});
+	};
+
+	Object.defineProperties(Symbol, {
+		create: d('', Symbol('create')),
+		hasInstance: d('', Symbol('hasInstance')),
+		isConcatSpreadable: d('', Symbol('isConcatSpreadable')),
+		isRegExp: d('', Symbol('isRegExp')),
+		iterator: d('', Symbol('iterator')),
+		toPrimitive: d('', Symbol('toPrimitive')),
+		toStringTag: d('', Symbol('toStringTag')),
+		unscopables: d('', Symbol('unscopables'))
+	});
+
+	defineProperties(Symbol.prototype, {
+		properToString: d(function () {
+			return 'Symbol (' + this.__description__ + ')';
+		}),
+		toString: d('', function () { return this.__name__; })
+	});
+	Object.defineProperty(Symbol.prototype, Symbol.toPrimitive, d('',
+		function (hint) {
+			throw new TypeError("Conversion of symbol objects is not allowed");
+		}));
+	Object.defineProperty(Symbol.prototype, Symbol.toStringTag, d('c', 'Symbol'));
+
+
+/***/ },
+/* 78 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(14)
+
+	module.exports = {
+
+	  bind: function () {
+	    var self = this
+	    var el = this.el
+
+	    // check params
+	    // - lazy: update model on "change" instead of "input"
+	    var lazy = el.hasAttribute('lazy')
+	    if (lazy) {
+	      el.removeAttribute('lazy')
+	    }
+	    // - number: cast value into number when updating model.
+	    var number =
+	      el.hasAttribute('number') ||
+	      el.type === 'number'
+	    if (number) {
+	      el.removeAttribute('number')
+	    }
+
+	    // handle composition events.
+	    // http://blog.evanyou.me/2014/01/03/composition-event/
+	    var cpLocked = false
+	    this.cpLock = function () {
+	      cpLocked = true
+	    }
+	    this.cpUnlock = function () {
+	      cpLocked = false
+	      // in IE11 the "compositionend" event fires AFTER
+	      // the "input" event, so the input handler is blocked
+	      // at the end... have to call it here.
+	      set()
+	    }
+	    _.on(el,'compositionstart', this.cpLock)
+	    _.on(el,'compositionend', this.cpUnlock)
+
+	    // shared setter
+	    function set () {
+	      self.set(
+	        number ? _.toNumber(el.value) : el.value,
+	        true
+	      )
+	    }
+
+	    // if the directive has filters, we need to
+	    // record cursor position and restore it after updating
+	    // the input with the filtered value.
+	    this.listener = function textInputListener () {
+	      if (cpLocked) return
+	      var charsOffset
+	      // some HTML5 input types throw error here
+	      try {
+	        // record how many chars from the end of input
+	        // the cursor was at
+	        charsOffset = el.value.length - el.selectionStart
+	      } catch (e) {}
+	      set()
+	      // force a value update, because in
+	      // certain cases the write filters output the same
+	      // result for different input values, and the Observer
+	      // set events won't be triggered.
+	      _.nextTick(function () {
+	        var newVal = self._watcher.value
+	        self.update(newVal)
+	        if (charsOffset != null) {
+	          var cursorPos =
+	            _.toString(newVal).length - charsOffset
+	          el.setSelectionRange(cursorPos, cursorPos)
+	        }
+	      })
+	    }
+	    this.event = lazy ? 'change' : 'input'
+	    _.on(el, this.event, this.listener)
+
+	    // IE9 doesn't fire input event on backspace/del/cut
+	    if (!lazy && _.isIE9) {
+	      this.onCut = function () {
+	        _.nextTick(self.listener)
+	      }
+	      this.onDel = function (e) {
+	        if (e.keyCode === 46 || e.keyCode === 8) {
+	          self.listener()
+	        }
+	      }
+	      _.on(el, 'cut', this.onCut)
+	      _.on(el, 'keyup', this.onDel)
+	    }
+
+	    // set initial value if present
+	    if (
+	      el.hasAttribute('value') ||
+	      (el.tagName === 'TEXTAREA' && el.value.trim())
+	    ) {
+	      this._initValue = number
+	        ? _.toNumber(el.value)
+	        : el.value
+	    }
+	  },
+
+	  update: function (value) {
+	    this.el.value = _.toString(value)
+	  },
+
+	  unbind: function () {
+	    var el = this.el
+	    _.off(el, this.event, this.listener)
+	    _.off(el,'compositionstart', this.cpLock)
+	    _.off(el,'compositionend', this.cpUnlock)
+	    if (this.onCut) {
+	      _.off(el,'cut', this.onCut)
+	      _.off(el,'keyup', this.onDel)
+	    }
+	  }
+
+	}
+
+/***/ },
+/* 79 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(14)
+
+	module.exports = {
+
+	  bind: function () {
+	    var self = this
+	    var el = this.el
+	    this.listener = function () {
+	      self.set(el.value, true)
+	    }
+	    _.on(el, 'change', this.listener)
+	    if (el.checked) {
+	      this._initValue = el.value
+	    }
+	  },
+
+	  update: function (value) {
+	    /* jshint eqeqeq: false */
+	    this.el.checked = value == this.el.value
+	  },
+
+	  unbind: function () {
+	    _.off(this.el, 'change', this.listener)
+	  }
+
+	}
+
+/***/ },
+/* 80 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(14)
+	var Watcher = __webpack_require__(53)
+
+	module.exports = {
+
+	  bind: function () {
+	    var self = this
+	    var el = this.el
+	    // check options param
+	    var optionsParam = el.getAttribute('options')
+	    if (optionsParam) {
+	      el.removeAttribute('options')
+	      initOptions.call(this, optionsParam)
+	    }
+	    this.multiple = el.hasAttribute('multiple')
+	    this.listener = function () {
+	      var value = self.multiple
+	        ? getMultiValue(el)
+	        : el.value
+	      self.set(value, true)
+	    }
+	    _.on(el, 'change', this.listener)
+	    checkInitialValue.call(this)
+	  },
+
+	  update: function (value) {
+	    /* jshint eqeqeq: false */
+	    var el = this.el
+	    el.selectedIndex = -1
+	    var multi = this.multiple && _.isArray(value)
+	    var options = el.options
+	    var i = options.length
+	    var option
+	    while (i--) {
+	      option = options[i]
+	      option.selected = multi
+	        ? indexOf(value, option.value) > -1
+	        : value == option.value
+	    }
+	  },
+
+	  unbind: function () {
+	    _.off(this.el, 'change', this.listener)
+	    if (this.optionWatcher) {
+	      this.optionWatcher.teardown()
+	    }
+	  }
+
+	}
+
+	/**
+	 * Initialize the option list from the param.
+	 *
+	 * @param {String} expression
+	 */
+
+	function initOptions (expression) {
+	  var self = this
+	  function optionUpdateWatcher (value) {
+	    if (_.isArray(value)) {
+	      self.el.innerHTML = ''
+	      buildOptions(self.el, value)
+	      if (self._watcher) {
+	        self.update(self._watcher.value)
+	      }
+	    } else {
+	      _.warn('Invalid options value for v-model: ' + value)
+	    }
+	  }
+	  this.optionWatcher = new Watcher(
+	    this.vm,
+	    expression,
+	    optionUpdateWatcher
+	  )
+	  // update with initial value
+	  optionUpdateWatcher(this.optionWatcher.value)
+	}
+
+	/**
+	 * Build up option elements. IE9 doesn't create options
+	 * when setting innerHTML on <select> elements, so we have
+	 * to use DOM API here.
+	 *
+	 * @param {Element} parent - a <select> or an <optgroup>
+	 * @param {Array} options
+	 */
+
+	function buildOptions (parent, options) {
+	  var op, el
+	  for (var i = 0, l = options.length; i < l; i++) {
+	    op = options[i]
+	    if (!op.options) {
+	      el = document.createElement('option')
+	      if (typeof op === 'string') {
+	        el.text = el.value = op
+	      } else {
+	        el.text = op.text
+	        el.value = op.value
+	      }
+	    } else {
+	      el = document.createElement('optgroup')
+	      el.label = op.label
+	      buildOptions(el, op.options)
+	    }
+	    parent.appendChild(el)
+	  }
+	}
+
+	/**
+	 * Check the initial value for selected options.
+	 */
+
+	function checkInitialValue () {
+	  var initValue
+	  var options = this.el.options
+	  for (var i = 0, l = options.length; i < l; i++) {
+	    if (options[i].hasAttribute('selected')) {
+	      if (this.multiple) {
+	        (initValue || (initValue = []))
+	          .push(options[i].value)
+	      } else {
+	        initValue = options[i].value
+	      }
+	    }
+	  }
+	  if (initValue) {
+	    this._initValue = initValue
+	  }
+	}
+
+	/**
+	 * Helper to extract a value array for select[multiple]
+	 *
+	 * @param {SelectElement} el
+	 * @return {Array}
+	 */
+
+	function getMultiValue (el) {
+	  return Array.prototype.filter
+	    .call(el.options, filterSelected)
+	    .map(getOptionValue)
+	}
+
+	function filterSelected (op) {
+	  return op.selected
+	}
+
+	function getOptionValue (op) {
+	  return op.value || op.text
+	}
+
+	/**
+	 * Native Array.indexOf uses strict equal, but in this
+	 * case we need to match string/numbers with soft equal.
+	 *
+	 * @param {Array} arr
+	 * @param {*} val
+	 */
+
+	function indexOf (arr, val) {
+	  /* jshint eqeqeq: false */
+	  var i = arr.length
+	  while (i--) {
+	    if (arr[i] == val) return i
+	  }
+	  return -1
+	}
+
+/***/ },
+/* 81 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(14)
+
+	module.exports = {
+
+	  bind: function () {
+	    var self = this
+	    var el = this.el
+	    this.listener = function () {
+	      self.set(el.checked, true)
+	    }
+	    _.on(el, 'change', this.listener)
+	    if (el.checked) {
+	      this._initValue = el.checked
+	    }
+	  },
+
+	  update: function (value) {
+	    this.el.checked = !!value
+	  },
+
+	  unbind: function () {
+	    _.off(this.el, 'change', this.listener)
+	  }
+
+	}
+
+/***/ },
+/* 82 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _ = __webpack_require__(14)
 	var addClass = _.addClass
 	var removeClass = _.removeClass
 	var transDurationProp = _.transitionProp + 'Duration'
@@ -10548,7 +10978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 74 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10596,365 +11026,360 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 75 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	/**
+	 * A doubly linked list-based Least Recently Used (LRU)
+	 * cache. Will keep most recently used items while
+	 * discarding least recently used items when its limit is
+	 * reached. This is a bare-bone version of
+	 * Rasmus Andersson's js-lru:
+	 *
+	 *   https://github.com/rsms/js-lru
+	 *
+	 * @param {Number} limit
+	 * @constructor
+	 */
 
-	module.exports = {
-
-	  bind: function () {
-	    var self = this
-	    var el = this.el
-
-	    // check params
-	    // - lazy: update model on "change" instead of "input"
-	    var lazy = el.hasAttribute('lazy')
-	    if (lazy) {
-	      el.removeAttribute('lazy')
-	    }
-	    // - number: cast value into number when updating model.
-	    var number =
-	      el.hasAttribute('number') ||
-	      el.type === 'number'
-	    if (number) {
-	      el.removeAttribute('number')
-	    }
-
-	    // handle composition events.
-	    // http://blog.evanyou.me/2014/01/03/composition-event/
-	    var cpLocked = false
-	    this.cpLock = function () {
-	      cpLocked = true
-	    }
-	    this.cpUnlock = function () {
-	      cpLocked = false
-	      // in IE11 the "compositionend" event fires AFTER
-	      // the "input" event, so the input handler is blocked
-	      // at the end... have to call it here.
-	      set()
-	    }
-	    _.on(el,'compositionstart', this.cpLock)
-	    _.on(el,'compositionend', this.cpUnlock)
-
-	    // shared setter
-	    function set () {
-	      self.set(
-	        number ? _.toNumber(el.value) : el.value,
-	        true
-	      )
-	    }
-
-	    // if the directive has filters, we need to
-	    // record cursor position and restore it after updating
-	    // the input with the filtered value.
-	    this.listener = function textInputListener () {
-	      if (cpLocked) return
-	      var charsOffset
-	      // some HTML5 input types throw error here
-	      try {
-	        // record how many chars from the end of input
-	        // the cursor was at
-	        charsOffset = el.value.length - el.selectionStart
-	      } catch (e) {}
-	      set()
-	      // force a value update, because in
-	      // certain cases the write filters output the same
-	      // result for different input values, and the Observer
-	      // set events won't be triggered.
-	      _.nextTick(function () {
-	        var newVal = self._watcher.value
-	        self.update(newVal)
-	        if (charsOffset != null) {
-	          var cursorPos =
-	            _.toString(newVal).length - charsOffset
-	          el.setSelectionRange(cursorPos, cursorPos)
-	        }
-	      })
-	    }
-	    this.event = lazy ? 'change' : 'input'
-	    _.on(el, this.event, this.listener)
-
-	    // IE9 doesn't fire input event on backspace/del/cut
-	    if (!lazy && _.isIE9) {
-	      this.onCut = function () {
-	        _.nextTick(self.listener)
-	      }
-	      this.onDel = function (e) {
-	        if (e.keyCode === 46 || e.keyCode === 8) {
-	          self.listener()
-	        }
-	      }
-	      _.on(el, 'cut', this.onCut)
-	      _.on(el, 'keyup', this.onDel)
-	    }
-
-	    // set initial value if present
-	    if (
-	      el.hasAttribute('value') ||
-	      (el.tagName === 'TEXTAREA' && el.value.trim())
-	    ) {
-	      this._initValue = number
-	        ? _.toNumber(el.value)
-	        : el.value
-	    }
-	  },
-
-	  update: function (value) {
-	    this.el.value = _.toString(value)
-	  },
-
-	  unbind: function () {
-	    var el = this.el
-	    _.off(el, this.event, this.listener)
-	    _.off(el,'compositionstart', this.cpLock)
-	    _.off(el,'compositionend', this.cpUnlock)
-	    if (this.onCut) {
-	      _.off(el,'cut', this.onCut)
-	      _.off(el,'keyup', this.onDel)
-	    }
-	  }
-
+	function Cache (limit) {
+	  this.size = 0
+	  this.limit = limit
+	  this.head = this.tail = undefined
+	  this._keymap = {}
 	}
 
-/***/ },
-/* 76 */
-/***/ function(module, exports, __webpack_require__) {
+	var p = Cache.prototype
 
-	var _ = __webpack_require__(12)
+	/**
+	 * Put <value> into the cache associated with <key>.
+	 * Returns the entry which was removed to make room for
+	 * the new entry. Otherwise undefined is returned.
+	 * (i.e. if there was enough room already).
+	 *
+	 * @param {String} key
+	 * @param {*} value
+	 * @return {Entry|undefined}
+	 */
 
-	module.exports = {
-
-	  bind: function () {
-	    var self = this
-	    var el = this.el
-	    this.listener = function () {
-	      self.set(el.value, true)
-	    }
-	    _.on(el, 'change', this.listener)
-	    if (el.checked) {
-	      this._initValue = el.value
-	    }
-	  },
-
-	  update: function (value) {
-	    /* jshint eqeqeq: false */
-	    this.el.checked = value == this.el.value
-	  },
-
-	  unbind: function () {
-	    _.off(this.el, 'change', this.listener)
+	p.put = function (key, value) {
+	  var entry = {
+	    key:key,
+	    value:value
 	  }
-
-	}
-
-/***/ },
-/* 77 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var _ = __webpack_require__(12)
-	var Watcher = __webpack_require__(34)
-
-	module.exports = {
-
-	  bind: function () {
-	    var self = this
-	    var el = this.el
-	    // check options param
-	    var optionsParam = el.getAttribute('options')
-	    if (optionsParam) {
-	      el.removeAttribute('options')
-	      initOptions.call(this, optionsParam)
-	    }
-	    this.multiple = el.hasAttribute('multiple')
-	    this.listener = function () {
-	      var value = self.multiple
-	        ? getMultiValue(el)
-	        : el.value
-	      self.set(value, true)
-	    }
-	    _.on(el, 'change', this.listener)
-	    checkInitialValue.call(this)
-	  },
-
-	  update: function (value) {
-	    /* jshint eqeqeq: false */
-	    var el = this.el
-	    el.selectedIndex = -1
-	    var multi = this.multiple && _.isArray(value)
-	    var options = el.options
-	    var i = options.length
-	    var option
-	    while (i--) {
-	      option = options[i]
-	      option.selected = multi
-	        ? indexOf(value, option.value) > -1
-	        : value == option.value
-	    }
-	  },
-
-	  unbind: function () {
-	    _.off(this.el, 'change', this.listener)
-	    if (this.optionWatcher) {
-	      this.optionWatcher.teardown()
-	    }
+	  this._keymap[key] = entry
+	  if (this.tail) {
+	    this.tail.newer = entry
+	    entry.older = this.tail
+	  } else {
+	    this.head = entry
 	  }
-
+	  this.tail = entry
+	  if (this.size === this.limit) {
+	    return this.shift()
+	  } else {
+	    this.size++
+	  }
 	}
 
 	/**
-	 * Initialize the option list from the param.
-	 *
-	 * @param {String} expression
+	 * Purge the least recently used (oldest) entry from the
+	 * cache. Returns the removed entry or undefined if the
+	 * cache was empty.
 	 */
 
-	function initOptions (expression) {
-	  var self = this
-	  function optionUpdateWatcher (value) {
-	    if (_.isArray(value)) {
-	      self.el.innerHTML = ''
-	      buildOptions(self.el, value)
-	      if (self._watcher) {
-	        self.update(self._watcher.value)
-	      }
+	p.shift = function () {
+	  var entry = this.head
+	  if (entry) {
+	    this.head = this.head.newer
+	    this.head.older = undefined
+	    entry.newer = entry.older = undefined
+	    this._keymap[entry.key] = undefined
+	  }
+	  return entry
+	}
+
+	/**
+	 * Get and register recent use of <key>. Returns the value
+	 * associated with <key> or undefined if not in cache.
+	 *
+	 * @param {String} key
+	 * @param {Boolean} returnEntry
+	 * @return {Entry|*}
+	 */
+
+	p.get = function (key, returnEntry) {
+	  var entry = this._keymap[key]
+	  if (entry === undefined) return
+	  if (entry === this.tail) {
+	    return returnEntry
+	      ? entry
+	      : entry.value
+	  }
+	  // HEAD--------------TAIL
+	  //   <.older   .newer>
+	  //  <--- add direction --
+	  //   A  B  C  <D>  E
+	  if (entry.newer) {
+	    if (entry === this.head) {
+	      this.head = entry.newer
+	    }
+	    entry.newer.older = entry.older // C <-- E.
+	  }
+	  if (entry.older) {
+	    entry.older.newer = entry.newer // C. --> E
+	  }
+	  entry.newer = undefined // D --x
+	  entry.older = this.tail // D. --> E
+	  if (this.tail) {
+	    this.tail.newer = entry // E. <-- D
+	  }
+	  this.tail = entry
+	  return returnEntry
+	    ? entry
+	    : entry.value
+	}
+
+	module.exports = Cache
+
+/***/ },
+/* 85 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(101)()
+		? Object.assign
+		: __webpack_require__(102);
+
+
+/***/ },
+/* 86 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var setPrototypeOf = __webpack_require__(71)
+	  , contains       = __webpack_require__(96)
+	  , d              = __webpack_require__(56)
+	  , Iterator       = __webpack_require__(100)
+
+	  , defineProperty = Object.defineProperty
+	  , ArrayIterator;
+
+	ArrayIterator = module.exports = function (arr, kind) {
+		if (!(this instanceof ArrayIterator)) return new ArrayIterator(arr, kind);
+		Iterator.call(this, arr);
+		if (!kind) kind = 'value';
+		else if (contains.call(kind, 'key+value')) kind = 'key+value';
+		else if (contains.call(kind, 'key')) kind = 'key';
+		else kind = 'value';
+		defineProperty(this, '__kind__', d('', kind));
+	};
+	if (setPrototypeOf) setPrototypeOf(ArrayIterator, Iterator);
+
+	ArrayIterator.prototype = Object.create(Iterator.prototype, {
+		constructor: d(ArrayIterator),
+		_resolve: d(function (i) {
+			if (this.__kind__ === 'value') return this.__list__[i];
+			if (this.__kind__ === 'key+value') return [i, this.__list__[i]];
+			return i;
+		}),
+		toString: d(function () { return '[object Array Iterator]'; })
+	});
+
+
+/***/ },
+/* 87 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Thanks @mathiasbynens
+	// http://mathiasbynens.be/notes/javascript-unicode#iterating-over-symbols
+
+	'use strict';
+
+	var setPrototypeOf = __webpack_require__(71)
+	  , d              = __webpack_require__(56)
+	  , Iterator       = __webpack_require__(100)
+
+	  , defineProperty = Object.defineProperty
+	  , StringIterator;
+
+	StringIterator = module.exports = function (str) {
+		if (!(this instanceof StringIterator)) return new StringIterator(str);
+		str = String(str);
+		Iterator.call(this, str);
+		defineProperty(this, '__length__', d('', str.length));
+
+	};
+	if (setPrototypeOf) setPrototypeOf(StringIterator, Iterator);
+
+	StringIterator.prototype = Object.create(Iterator.prototype, {
+		constructor: d(StringIterator),
+		_next: d(function () {
+			if (!this.__list__) return;
+			if (this.__nextIndex__ < this.__length__) return this.__nextIndex__++;
+			this._unBind();
+		}),
+		_resolve: d(function (i) {
+			var char = this.__list__[i], code;
+			if (this.__nextIndex__ === this.__length__) return char;
+			code = char.charCodeAt(0);
+			if ((code >= 0xD800) && (code <= 0xDBFF)) return char + this.__list__[this.__nextIndex__++];
+			return char;
+		}),
+		toString: d(function () { return '[object String Iterator]'; })
+	});
+
+
+/***/ },
+/* 88 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var isIterable = __webpack_require__(103);
+
+	module.exports = function (value) {
+		if (!isIterable(value)) throw new TypeError(value + " is not iterable");
+		return value;
+	};
+
+
+/***/ },
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	/**
+	 * isArray
+	 */
+
+	var isArray = Array.isArray;
+
+	/**
+	 * toString
+	 */
+
+	var str = Object.prototype.toString;
+
+	/**
+	 * Whether or not the given `val`
+	 * is an array.
+	 *
+	 * example:
+	 *
+	 *        isArray([]);
+	 *        // > true
+	 *        isArray(arguments);
+	 *        // > false
+	 *        isArray('');
+	 *        // > false
+	 *
+	 * @param {mixed} val
+	 * @return {bool}
+	 */
+
+	module.exports = isArray || function (val) {
+	  return !! val && '[object Array]' == str.call(val);
+	};
+
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports.read = function(buffer, offset, isLE, mLen, nBytes) {
+	  var e, m,
+	      eLen = nBytes * 8 - mLen - 1,
+	      eMax = (1 << eLen) - 1,
+	      eBias = eMax >> 1,
+	      nBits = -7,
+	      i = isLE ? (nBytes - 1) : 0,
+	      d = isLE ? -1 : 1,
+	      s = buffer[offset + i];
+
+	  i += d;
+
+	  e = s & ((1 << (-nBits)) - 1);
+	  s >>= (-nBits);
+	  nBits += eLen;
+	  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8);
+
+	  m = e & ((1 << (-nBits)) - 1);
+	  e >>= (-nBits);
+	  nBits += mLen;
+	  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8);
+
+	  if (e === 0) {
+	    e = 1 - eBias;
+	  } else if (e === eMax) {
+	    return m ? NaN : ((s ? -1 : 1) * Infinity);
+	  } else {
+	    m = m + Math.pow(2, mLen);
+	    e = e - eBias;
+	  }
+	  return (s ? -1 : 1) * m * Math.pow(2, e - mLen);
+	};
+
+	exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
+	  var e, m, c,
+	      eLen = nBytes * 8 - mLen - 1,
+	      eMax = (1 << eLen) - 1,
+	      eBias = eMax >> 1,
+	      rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0),
+	      i = isLE ? 0 : (nBytes - 1),
+	      d = isLE ? 1 : -1,
+	      s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0;
+
+	  value = Math.abs(value);
+
+	  if (isNaN(value) || value === Infinity) {
+	    m = isNaN(value) ? 1 : 0;
+	    e = eMax;
+	  } else {
+	    e = Math.floor(Math.log(value) / Math.LN2);
+	    if (value * (c = Math.pow(2, -e)) < 1) {
+	      e--;
+	      c *= 2;
+	    }
+	    if (e + eBias >= 1) {
+	      value += rt / c;
 	    } else {
-	      _.warn('Invalid options value for v-model: ' + value)
+	      value += rt * Math.pow(2, 1 - eBias);
 	    }
-	  }
-	  this.optionWatcher = new Watcher(
-	    this.vm,
-	    expression,
-	    optionUpdateWatcher
-	  )
-	  // update with initial value
-	  optionUpdateWatcher(this.optionWatcher.value)
-	}
+	    if (value * c >= 2) {
+	      e++;
+	      c /= 2;
+	    }
 
-	/**
-	 * Build up option elements. IE9 doesn't create options
-	 * when setting innerHTML on <select> elements, so we have
-	 * to use DOM API here.
-	 *
-	 * @param {Element} parent - a <select> or an <optgroup>
-	 * @param {Array} options
-	 */
-
-	function buildOptions (parent, options) {
-	  var op, el
-	  for (var i = 0, l = options.length; i < l; i++) {
-	    op = options[i]
-	    if (!op.options) {
-	      el = document.createElement('option')
-	      if (typeof op === 'string') {
-	        el.text = el.value = op
-	      } else {
-	        el.text = op.text
-	        el.value = op.value
-	      }
+	    if (e + eBias >= eMax) {
+	      m = 0;
+	      e = eMax;
+	    } else if (e + eBias >= 1) {
+	      m = (value * c - 1) * Math.pow(2, mLen);
+	      e = e + eBias;
 	    } else {
-	      el = document.createElement('optgroup')
-	      el.label = op.label
-	      buildOptions(el, op.options)
-	    }
-	    parent.appendChild(el)
-	  }
-	}
-
-	/**
-	 * Check the initial value for selected options.
-	 */
-
-	function checkInitialValue () {
-	  var initValue
-	  var options = this.el.options
-	  for (var i = 0, l = options.length; i < l; i++) {
-	    if (options[i].hasAttribute('selected')) {
-	      if (this.multiple) {
-	        (initValue || (initValue = []))
-	          .push(options[i].value)
-	      } else {
-	        initValue = options[i].value
-	      }
+	      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen);
+	      e = 0;
 	    }
 	  }
-	  if (initValue) {
-	    this._initValue = initValue
-	  }
-	}
 
-	/**
-	 * Helper to extract a value array for select[multiple]
-	 *
-	 * @param {SelectElement} el
-	 * @return {Array}
-	 */
+	  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8);
 
-	function getMultiValue (el) {
-	  return Array.prototype.filter
-	    .call(el.options, filterSelected)
-	    .map(getOptionValue)
-	}
+	  e = (e << mLen) | m;
+	  eLen += mLen;
+	  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8);
 
-	function filterSelected (op) {
-	  return op.selected
-	}
+	  buffer[offset + i - d] |= s * 128;
+	};
 
-	function getOptionValue (op) {
-	  return op.value || op.text
-	}
-
-	/**
-	 * Native Array.indexOf uses strict equal, but in this
-	 * case we need to match string/numbers with soft equal.
-	 *
-	 * @param {Array} arr
-	 * @param {*} val
-	 */
-
-	function indexOf (arr, val) {
-	  /* jshint eqeqeq: false */
-	  var i = arr.length
-	  while (i--) {
-	    if (arr[i] == val) return i
-	  }
-	  return -1
-	}
 
 /***/ },
-/* 78 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
-
-	module.exports = {
-
-	  bind: function () {
-	    var self = this
-	    var el = this.el
-	    this.listener = function () {
-	      self.set(el.checked, true)
-	    }
-	    _.on(el, 'change', this.listener)
-	    if (el.checked) {
-	      this._initValue = el.checked
-	    }
-	  },
-
-	  update: function (value) {
-	    this.el.checked = !!value
-	  },
-
-	  unbind: function () {
-	    _.off(this.el, 'change', this.listener)
-	  }
-
-	}
-
-/***/ },
-/* 79 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 	var arrayProto = Array.prototype
 	var arrayMethods = Object.create(arrayProto)
 
@@ -11046,10 +11471,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = arrayMethods
 
 /***/ },
-/* 80 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(12)
+	var _ = __webpack_require__(14)
 	var objProto = Object.prototype
 
 	/**
@@ -11126,363 +11551,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	)
 
 /***/ },
-/* 81 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	/**
-	 * isArray
-	 */
-
-	var isArray = Array.isArray;
-
-	/**
-	 * toString
-	 */
-
-	var str = Object.prototype.toString;
-
-	/**
-	 * Whether or not the given `val`
-	 * is an array.
-	 *
-	 * example:
-	 *
-	 *        isArray([]);
-	 *        // > true
-	 *        isArray(arguments);
-	 *        // > false
-	 *        isArray('');
-	 *        // > false
-	 *
-	 * @param {mixed} val
-	 * @return {bool}
-	 */
-
-	module.exports = isArray || function (val) {
-	  return !! val && '[object Array]' == str.call(val);
-	};
-
-
-/***/ },
-/* 82 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports.read = function(buffer, offset, isLE, mLen, nBytes) {
-	  var e, m,
-	      eLen = nBytes * 8 - mLen - 1,
-	      eMax = (1 << eLen) - 1,
-	      eBias = eMax >> 1,
-	      nBits = -7,
-	      i = isLE ? (nBytes - 1) : 0,
-	      d = isLE ? -1 : 1,
-	      s = buffer[offset + i];
-
-	  i += d;
-
-	  e = s & ((1 << (-nBits)) - 1);
-	  s >>= (-nBits);
-	  nBits += eLen;
-	  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8);
-
-	  m = e & ((1 << (-nBits)) - 1);
-	  e >>= (-nBits);
-	  nBits += mLen;
-	  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8);
-
-	  if (e === 0) {
-	    e = 1 - eBias;
-	  } else if (e === eMax) {
-	    return m ? NaN : ((s ? -1 : 1) * Infinity);
-	  } else {
-	    m = m + Math.pow(2, mLen);
-	    e = e - eBias;
-	  }
-	  return (s ? -1 : 1) * m * Math.pow(2, e - mLen);
-	};
-
-	exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
-	  var e, m, c,
-	      eLen = nBytes * 8 - mLen - 1,
-	      eMax = (1 << eLen) - 1,
-	      eBias = eMax >> 1,
-	      rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0),
-	      i = isLE ? 0 : (nBytes - 1),
-	      d = isLE ? 1 : -1,
-	      s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0;
-
-	  value = Math.abs(value);
-
-	  if (isNaN(value) || value === Infinity) {
-	    m = isNaN(value) ? 1 : 0;
-	    e = eMax;
-	  } else {
-	    e = Math.floor(Math.log(value) / Math.LN2);
-	    if (value * (c = Math.pow(2, -e)) < 1) {
-	      e--;
-	      c *= 2;
-	    }
-	    if (e + eBias >= 1) {
-	      value += rt / c;
-	    } else {
-	      value += rt * Math.pow(2, 1 - eBias);
-	    }
-	    if (value * c >= 2) {
-	      e++;
-	      c /= 2;
-	    }
-
-	    if (e + eBias >= eMax) {
-	      m = 0;
-	      e = eMax;
-	    } else if (e + eBias >= 1) {
-	      m = (value * c - 1) * Math.pow(2, mLen);
-	      e = e + eBias;
-	    } else {
-	      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen);
-	      e = 0;
-	    }
-	  }
-
-	  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8);
-
-	  e = (e << mLen) | m;
-	  eLen += mLen;
-	  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8);
-
-	  buffer[offset + i - d] |= s * 128;
-	};
-
-
-/***/ },
-/* 83 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var assign = __webpack_require__(87)
-
-	  , forEach = Array.prototype.forEach
-	  , create = Object.create, getPrototypeOf = Object.getPrototypeOf
-
-	  , process;
-
-	process = function (src, obj) {
-		var proto = getPrototypeOf(src);
-		return assign(proto ? process(proto, obj) : obj, src);
-	};
-
-	module.exports = function (options/*, …options*/) {
-		var result = create(null);
-		forEach.call(arguments, function (options) {
-			if (options == null) return;
-			process(Object(options), result);
-		});
-		return result;
-	};
-
-
-/***/ },
-/* 84 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// Deprecated
-
-	'use strict';
-
-	module.exports = function (obj) { return typeof obj === 'function'; };
-
-
-/***/ },
-/* 85 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = function () {
-		var symbol;
-		if (typeof Symbol !== 'function') return false;
-		symbol = Symbol('test symbol');
-		try { String(symbol); } catch (e) { return false; }
-		if (typeof Symbol.iterator === 'symbol') return true;
-
-		// Return 'true' for polyfills
-		if (typeof Symbol.isConcatSpreadable !== 'object') return false;
-		if (typeof Symbol.isRegExp !== 'object') return false;
-		if (typeof Symbol.iterator !== 'object') return false;
-		if (typeof Symbol.toPrimitive !== 'object') return false;
-		if (typeof Symbol.toStringTag !== 'object') return false;
-		if (typeof Symbol.unscopables !== 'object') return false;
-
-		return true;
-	};
-
-
-/***/ },
-/* 86 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var d = __webpack_require__(63)
-
-	  , create = Object.create, defineProperties = Object.defineProperties
-	  , generateName, Symbol;
-
-	generateName = (function () {
-		var created = create(null);
-		return function (desc) {
-			var postfix = 0;
-			while (created[desc + (postfix || '')]) ++postfix;
-			desc += (postfix || '');
-			created[desc] = true;
-			return '@@' + desc;
-		};
-	}());
-
-	module.exports = Symbol = function (description) {
-		var symbol;
-		if (this instanceof Symbol) {
-			throw new TypeError('TypeError: Symbol is not a constructor');
-		}
-		symbol = create(Symbol.prototype);
-		description = (description === undefined ? '' : String(description));
-		return defineProperties(symbol, {
-			__description__: d('', description),
-			__name__: d('', generateName(description))
-		});
-	};
-
-	Object.defineProperties(Symbol, {
-		create: d('', Symbol('create')),
-		hasInstance: d('', Symbol('hasInstance')),
-		isConcatSpreadable: d('', Symbol('isConcatSpreadable')),
-		isRegExp: d('', Symbol('isRegExp')),
-		iterator: d('', Symbol('iterator')),
-		toPrimitive: d('', Symbol('toPrimitive')),
-		toStringTag: d('', Symbol('toStringTag')),
-		unscopables: d('', Symbol('unscopables'))
-	});
-
-	defineProperties(Symbol.prototype, {
-		properToString: d(function () {
-			return 'Symbol (' + this.__description__ + ')';
-		}),
-		toString: d('', function () { return this.__name__; })
-	});
-	Object.defineProperty(Symbol.prototype, Symbol.toPrimitive, d('',
-		function (hint) {
-			throw new TypeError("Conversion of symbol objects is not allowed");
-		}));
-	Object.defineProperty(Symbol.prototype, Symbol.toStringTag, d('c', 'Symbol'));
-
-
-/***/ },
-/* 87 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(98)()
-		? Object.assign
-		: __webpack_require__(99);
-
-
-/***/ },
-/* 88 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var setPrototypeOf = __webpack_require__(69)
-	  , contains       = __webpack_require__(97)
-	  , d              = __webpack_require__(63)
-	  , Iterator       = __webpack_require__(100)
-
-	  , defineProperty = Object.defineProperty
-	  , ArrayIterator;
-
-	ArrayIterator = module.exports = function (arr, kind) {
-		if (!(this instanceof ArrayIterator)) return new ArrayIterator(arr, kind);
-		Iterator.call(this, arr);
-		if (!kind) kind = 'value';
-		else if (contains.call(kind, 'key+value')) kind = 'key+value';
-		else if (contains.call(kind, 'key')) kind = 'key';
-		else kind = 'value';
-		defineProperty(this, '__kind__', d('', kind));
-	};
-	if (setPrototypeOf) setPrototypeOf(ArrayIterator, Iterator);
-
-	ArrayIterator.prototype = Object.create(Iterator.prototype, {
-		constructor: d(ArrayIterator),
-		_resolve: d(function (i) {
-			if (this.__kind__ === 'value') return this.__list__[i];
-			if (this.__kind__ === 'key+value') return [i, this.__list__[i]];
-			return i;
-		}),
-		toString: d(function () { return '[object Array Iterator]'; })
-	});
-
-
-/***/ },
-/* 89 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// Thanks @mathiasbynens
-	// http://mathiasbynens.be/notes/javascript-unicode#iterating-over-symbols
-
-	'use strict';
-
-	var setPrototypeOf = __webpack_require__(69)
-	  , d              = __webpack_require__(63)
-	  , Iterator       = __webpack_require__(100)
-
-	  , defineProperty = Object.defineProperty
-	  , StringIterator;
-
-	StringIterator = module.exports = function (str) {
-		if (!(this instanceof StringIterator)) return new StringIterator(str);
-		str = String(str);
-		Iterator.call(this, str);
-		defineProperty(this, '__length__', d('', str.length));
-
-	};
-	if (setPrototypeOf) setPrototypeOf(StringIterator, Iterator);
-
-	StringIterator.prototype = Object.create(Iterator.prototype, {
-		constructor: d(StringIterator),
-		_next: d(function () {
-			if (!this.__list__) return;
-			if (this.__nextIndex__ < this.__length__) return this.__nextIndex__++;
-			this._unBind();
-		}),
-		_resolve: d(function (i) {
-			var char = this.__list__[i], code;
-			if (this.__nextIndex__ === this.__length__) return char;
-			code = char.charCodeAt(0);
-			if ((code >= 0xD800) && (code <= 0xDBFF)) return char + this.__list__[this.__nextIndex__++];
-			return char;
-		}),
-		toString: d(function () { return '[object String Iterator]'; })
-	});
-
-
-/***/ },
-/* 90 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var isIterable = __webpack_require__(101);
-
-	module.exports = function (value) {
-		if (!isIterable(value)) throw new TypeError(value + " is not iterable");
-		return value;
-	};
-
-
-/***/ },
-/* 91 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11494,7 +11563,143 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 92 */
+/* 94 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var map = { 'function': true, 'object': true };
+
+	module.exports = function (x) {
+		return ((x != null) && map[typeof x]) || false;
+	};
+
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var toString = Object.prototype.toString
+
+	  , id = toString.call('');
+
+	module.exports = function (x) {
+		return (typeof x === 'string') || (x && (typeof x === 'object') &&
+			((x instanceof String) || (toString.call(x) === id))) || false;
+	};
+
+
+/***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(104)()
+		? String.prototype.contains
+		: __webpack_require__(105);
+
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var create = Object.create, getPrototypeOf = Object.getPrototypeOf
+	  , x = {};
+
+	module.exports = function (/*customCreate*/) {
+		var setPrototypeOf = Object.setPrototypeOf
+		  , customCreate = arguments[0] || create;
+		if (typeof setPrototypeOf !== 'function') return false;
+		return getPrototypeOf(setPrototypeOf(customCreate(null), x)) === x;
+	};
+
+
+/***/ },
+/* 98 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Big thanks to @WebReflection for sorting this out
+	// https://gist.github.com/WebReflection/5593554
+
+	'use strict';
+
+	var isObject      = __webpack_require__(94)
+	  , value         = __webpack_require__(70)
+
+	  , isPrototypeOf = Object.prototype.isPrototypeOf
+	  , defineProperty = Object.defineProperty
+	  , nullDesc = { configurable: true, enumerable: false, writable: true,
+			value: undefined }
+	  , validate;
+
+	validate = function (obj, prototype) {
+		value(obj);
+		if ((prototype === null) || isObject(prototype)) return obj;
+		throw new TypeError('Prototype must be null or an object');
+	};
+
+	module.exports = (function (status) {
+		var fn, set;
+		if (!status) return null;
+		if (status.level === 2) {
+			if (status.set) {
+				set = status.set;
+				fn = function (obj, prototype) {
+					set.call(validate(obj, prototype), prototype);
+					return obj;
+				};
+			} else {
+				fn = function (obj, prototype) {
+					validate(obj, prototype).__proto__ = prototype;
+					return obj;
+				};
+			}
+		} else {
+			fn = function self(obj, prototype) {
+				var isNullBase;
+				validate(obj, prototype);
+				isNullBase = isPrototypeOf.call(self.nullPolyfill, obj);
+				if (isNullBase) delete self.nullPolyfill.__proto__;
+				if (prototype === null) prototype = self.nullPolyfill;
+				obj.__proto__ = prototype;
+				if (isNullBase) defineProperty(self.nullPolyfill, '__proto__', nullDesc);
+				return obj;
+			};
+		}
+		return Object.defineProperty(fn, 'level', { configurable: false,
+			enumerable: false, writable: false, value: status.level });
+	}((function () {
+		var x = Object.create(null), y = {}, set
+		  , desc = Object.getOwnPropertyDescriptor(Object.prototype, '__proto__');
+
+		if (desc) {
+			try {
+				set = desc.set; // Opera crashes at this point
+				set.call(x, y);
+			} catch (ignore) { }
+			if (Object.getPrototypeOf(x) === y) return { set: set, level: 2 };
+		}
+
+		x.__proto__ = y;
+		if (Object.getPrototypeOf(x) === y) return { level: 2 };
+
+		x = {};
+		x.__proto__ = y;
+		if (Object.getPrototypeOf(x) === y) return { level: 1 };
+
+		return false;
+	}())));
+
+	__webpack_require__(106);
+
+
+/***/ },
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
@@ -11620,197 +11825,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 93 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var map = { 'function': true, 'object': true };
-
-	module.exports = function (x) {
-		return ((x != null) && map[typeof x]) || false;
-	};
-
-
-/***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var create = Object.create, getPrototypeOf = Object.getPrototypeOf
-	  , x = {};
-
-	module.exports = function (/*customCreate*/) {
-		var setPrototypeOf = Object.setPrototypeOf
-		  , customCreate = arguments[0] || create;
-		if (typeof setPrototypeOf !== 'function') return false;
-		return getPrototypeOf(setPrototypeOf(customCreate(null), x)) === x;
-	};
-
-
-/***/ },
-/* 95 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// Big thanks to @WebReflection for sorting this out
-	// https://gist.github.com/WebReflection/5593554
-
-	'use strict';
-
-	var isObject      = __webpack_require__(93)
-	  , value         = __webpack_require__(68)
-
-	  , isPrototypeOf = Object.prototype.isPrototypeOf
-	  , defineProperty = Object.defineProperty
-	  , nullDesc = { configurable: true, enumerable: false, writable: true,
-			value: undefined }
-	  , validate;
-
-	validate = function (obj, prototype) {
-		value(obj);
-		if ((prototype === null) || isObject(prototype)) return obj;
-		throw new TypeError('Prototype must be null or an object');
-	};
-
-	module.exports = (function (status) {
-		var fn, set;
-		if (!status) return null;
-		if (status.level === 2) {
-			if (status.set) {
-				set = status.set;
-				fn = function (obj, prototype) {
-					set.call(validate(obj, prototype), prototype);
-					return obj;
-				};
-			} else {
-				fn = function (obj, prototype) {
-					validate(obj, prototype).__proto__ = prototype;
-					return obj;
-				};
-			}
-		} else {
-			fn = function self(obj, prototype) {
-				var isNullBase;
-				validate(obj, prototype);
-				isNullBase = isPrototypeOf.call(self.nullPolyfill, obj);
-				if (isNullBase) delete self.nullPolyfill.__proto__;
-				if (prototype === null) prototype = self.nullPolyfill;
-				obj.__proto__ = prototype;
-				if (isNullBase) defineProperty(self.nullPolyfill, '__proto__', nullDesc);
-				return obj;
-			};
-		}
-		return Object.defineProperty(fn, 'level', { configurable: false,
-			enumerable: false, writable: false, value: status.level });
-	}((function () {
-		var x = Object.create(null), y = {}, set
-		  , desc = Object.getOwnPropertyDescriptor(Object.prototype, '__proto__');
-
-		if (desc) {
-			try {
-				set = desc.set; // Opera crashes at this point
-				set.call(x, y);
-			} catch (ignore) { }
-			if (Object.getPrototypeOf(x) === y) return { set: set, level: 2 };
-		}
-
-		x.__proto__ = y;
-		if (Object.getPrototypeOf(x) === y) return { level: 2 };
-
-		x = {};
-		x.__proto__ = y;
-		if (Object.getPrototypeOf(x) === y) return { level: 1 };
-
-		return false;
-	}())));
-
-	__webpack_require__(102);
-
-
-/***/ },
-/* 96 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var toString = Object.prototype.toString
-
-	  , id = toString.call('');
-
-	module.exports = function (x) {
-		return (typeof x === 'string') || (x && (typeof x === 'object') &&
-			((x instanceof String) || (toString.call(x) === id))) || false;
-	};
-
-
-/***/ },
-/* 97 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(103)()
-		? String.prototype.contains
-		: __webpack_require__(104);
-
-
-/***/ },
-/* 98 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = function () {
-		var assign = Object.assign, obj;
-		if (typeof assign !== 'function') return false;
-		obj = { foo: 'raz' };
-		assign(obj, { bar: 'dwa' }, { trzy: 'trzy' });
-		return (obj.foo + obj.bar + obj.trzy) === 'razdwatrzy';
-	};
-
-
-/***/ },
-/* 99 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var keys  = __webpack_require__(106)
-	  , value = __webpack_require__(68)
-
-	  , max = Math.max;
-
-	module.exports = function (dest, src/*, …srcn*/) {
-		var error, i, l = max(arguments.length, 2), assign;
-		dest = Object(value(dest));
-		assign = function (key) {
-			try { dest[key] = src[key]; } catch (e) {
-				if (!error) error = e;
-			}
-		};
-		for (i = 1; i < l; ++i) {
-			src = arguments[i];
-			keys(src).forEach(assign);
-		}
-		if (error !== undefined) throw error;
-		return dest;
-	};
-
-
-/***/ },
 /* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var clear    = __webpack_require__(107)
-	  , assign   = __webpack_require__(87)
-	  , callable = __webpack_require__(91)
-	  , value    = __webpack_require__(68)
-	  , d        = __webpack_require__(63)
-	  , autoBind = __webpack_require__(105)
-	  , Symbol   = __webpack_require__(64)
+	var clear    = __webpack_require__(109)
+	  , assign   = __webpack_require__(85)
+	  , callable = __webpack_require__(93)
+	  , value    = __webpack_require__(70)
+	  , d        = __webpack_require__(56)
+	  , autoBind = __webpack_require__(107)
+	  , Symbol   = __webpack_require__(57)
 
 	  , defineProperty = Object.defineProperty
 	  , defineProperties = Object.defineProperties
@@ -11900,8 +11926,51 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var isString       = __webpack_require__(96)
-	  , iteratorSymbol = __webpack_require__(64).iterator
+	module.exports = function () {
+		var assign = Object.assign, obj;
+		if (typeof assign !== 'function') return false;
+		obj = { foo: 'raz' };
+		assign(obj, { bar: 'dwa' }, { trzy: 'trzy' });
+		return (obj.foo + obj.bar + obj.trzy) === 'razdwatrzy';
+	};
+
+
+/***/ },
+/* 102 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var keys  = __webpack_require__(108)
+	  , value = __webpack_require__(70)
+
+	  , max = Math.max;
+
+	module.exports = function (dest, src/*, …srcn*/) {
+		var error, i, l = max(arguments.length, 2), assign;
+		dest = Object(value(dest));
+		assign = function (key) {
+			try { dest[key] = src[key]; } catch (e) {
+				if (!error) error = e;
+			}
+		};
+		for (i = 1; i < l; ++i) {
+			src = arguments[i];
+			keys(src).forEach(assign);
+		}
+		if (error !== undefined) throw error;
+		return dest;
+	};
+
+
+/***/ },
+/* 103 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var isString       = __webpack_require__(95)
+	  , iteratorSymbol = __webpack_require__(57).iterator
 
 	  , isArray = Array.isArray;
 
@@ -11914,7 +11983,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 102 */
+/* 104 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var str = 'razdwatrzy';
+
+	module.exports = function () {
+		if (typeof str.contains !== 'function') return false;
+		return ((str.contains('dwa') === true) && (str.contains('foo') === false));
+	};
+
+
+/***/ },
+/* 105 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var indexOf = String.prototype.indexOf;
+
+	module.exports = function (searchString/*, position*/) {
+		return indexOf.call(this, searchString, arguments[1]) > -1;
+	};
+
+
+/***/ },
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Workaround for http://code.google.com/p/v8/issues/detail?id=2804
@@ -11923,8 +12019,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var create = Object.create, shim;
 
-	if (!__webpack_require__(94)()) {
-		shim = __webpack_require__(95);
+	if (!__webpack_require__(97)()) {
+		shim = __webpack_require__(98);
 	}
 
 	module.exports = (function () {
@@ -11956,42 +12052,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 103 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var str = 'razdwatrzy';
-
-	module.exports = function () {
-		if (typeof str.contains !== 'function') return false;
-		return ((str.contains('dwa') === true) && (str.contains('foo') === false));
-	};
-
-
-/***/ },
-/* 104 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var indexOf = String.prototype.indexOf;
-
-	module.exports = function (searchString/*, position*/) {
-		return indexOf.call(this, searchString, arguments[1]) > -1;
-	};
-
-
-/***/ },
-/* 105 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var copy       = __webpack_require__(108)
-	  , map        = __webpack_require__(109)
-	  , callable   = __webpack_require__(91)
-	  , validValue = __webpack_require__(68)
+	var copy       = __webpack_require__(112)
+	  , map        = __webpack_require__(113)
+	  , callable   = __webpack_require__(93)
+	  , validValue = __webpack_require__(70)
 
 	  , bind = Function.prototype.bind, defineProperty = Object.defineProperty
 	  , hasOwnProperty = Object.prototype.hasOwnProperty
@@ -12020,7 +12089,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 106 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12031,7 +12100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 107 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Inspired by Google Closure:
@@ -12040,48 +12109,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var value = __webpack_require__(68);
+	var value = __webpack_require__(70);
 
 	module.exports = function () {
 		value(this).length = 0;
 		return this;
-	};
-
-
-/***/ },
-/* 108 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var assign = __webpack_require__(87)
-	  , value  = __webpack_require__(68);
-
-	module.exports = function (obj) {
-		var copy = Object(value(obj));
-		if (copy !== obj) return copy;
-		return assign({}, obj);
-	};
-
-
-/***/ },
-/* 109 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var callable = __webpack_require__(91)
-	  , forEach  = __webpack_require__(112)
-
-	  , call = Function.prototype.call;
-
-	module.exports = function (obj, cb/*, thisArg*/) {
-		var o = {}, thisArg = arguments[2];
-		callable(cb);
-		forEach(obj, function (value, key, obj, index) {
-			o[key] = call.call(cb, thisArg, value, key, obj, index);
-		});
-		return o;
 	};
 
 
@@ -12118,11 +12150,48 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	module.exports = __webpack_require__(113)('forEach');
+	var assign = __webpack_require__(85)
+	  , value  = __webpack_require__(70);
+
+	module.exports = function (obj) {
+		var copy = Object(value(obj));
+		if (copy !== obj) return copy;
+		return assign({}, obj);
+	};
 
 
 /***/ },
 /* 113 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var callable = __webpack_require__(93)
+	  , forEach  = __webpack_require__(114)
+
+	  , call = Function.prototype.call;
+
+	module.exports = function (obj, cb/*, thisArg*/) {
+		var o = {}, thisArg = arguments[2];
+		callable(cb);
+		forEach(obj, function (value, key, obj, index) {
+			o[key] = call.call(cb, thisArg, value, key, obj, index);
+		});
+		return o;
+	};
+
+
+/***/ },
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(115)('forEach');
+
+
+/***/ },
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Internal method, used by iteration functions.
@@ -12131,9 +12200,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var isCallable = __webpack_require__(84)
-	  , callable   = __webpack_require__(91)
-	  , value      = __webpack_require__(68)
+	var isCallable = __webpack_require__(75)
+	  , callable   = __webpack_require__(93)
+	  , value      = __webpack_require__(70)
 
 	  , call = Function.prototype.call, keys = Object.keys
 	  , propertyIsEnumerable = Object.prototype.propertyIsEnumerable;
