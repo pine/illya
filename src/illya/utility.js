@@ -29,14 +29,8 @@ function extendTypeScript(d, b) {
     d.prototype = new __();
 }
 
-function extendAfter(klass, parent) {
-    var originProto = extend(klass.prototype);
-
-    extendTypeScript(klass, parent);
-    mixin(klass.prototype, originProto);
-}
 
 module.exports = {
     mixin: mixin,
-    extendAfter: extendAfter
+    extendTypeScript: extendTypeScript
 };
