@@ -12,6 +12,8 @@ var LIFECYCLE_METHODS_KEYS = [
 var RESERVED_METHODS_KEYS = ['constructor'].concat(LIFECYCLE_METHODS_KEYS);
 
 function track(vm, path, options, ctorOptionsWM) {
+    'use strict';
+
     options = compileOptions(vm, options, ctorOptionsWM);
 
     vm.constructor.options = Illya.options;
@@ -24,6 +26,8 @@ function track(vm, path, options, ctorOptionsWM) {
 }
 
 function compileOptions(vm, trackOptions, ctorOptionsWM) {
+    'use strict';
+
     var options = trackOptions || {};
     var ctorOptions = {};
 
@@ -42,6 +46,8 @@ function compileOptions(vm, trackOptions, ctorOptionsWM) {
 }
 
 function trackData(obj) {
+    'use strict';
+
     var keys = Object.keys(obj);
     var data = {};
 
