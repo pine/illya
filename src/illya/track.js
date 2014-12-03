@@ -19,7 +19,7 @@ function track(vm, path, options, ctorOptionsWM) {
     vm.constructor.options = Illya.options;
     vm._init(options);
 
-    var elem = element.resolveElement(this, path);
+    var elem = element.resolveElement(vm, path);
     if (elem) {
         vm.$mount(elem);
     }
