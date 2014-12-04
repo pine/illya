@@ -11,7 +11,7 @@ class App extends Illya.Router {
         this.map('#/article(/:id)').to(this.article);
         this.rescue(this.unknown);
 
-        this.root('#/index');
+        this.root('#/');
 
         this.listen();
     }

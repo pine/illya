@@ -6,7 +6,6 @@ function Router() {
 
     this.path = null;
     this.params = {};
-    // TODO: hashPrefix
     
     Path.rescue(wrapRescureFunction(this));
 }
@@ -25,9 +24,11 @@ Router.prototype.rescue = function (fn) {
 
 Router.prototype.listen = function () {
     Path.listen();
-    // TODO: html5Mode
 };
 
+/**
+ * ルートを設定する際のヘルパークラス
+ */
 function RouteProxy(router, route) {
     this.router = router;
     this.route = route;
@@ -57,6 +58,9 @@ RouteProxy.prototype.exit = function (fn) {
     return this;
 };
 
+/**
+ * ルート関係のイベントハンドラをパラメーを設定して呼ぶようにラップする
+ */
 function getRouteFunctionProxy(router, fn) {
     return function () {
         router.params = this.params;
@@ -66,6 +70,9 @@ function getRouteFunctionProxy(router, fn) {
     };
 }
 
+/**
+ * 設定されたルートが見つからない時に実行される関数をラップする
+ */
 function wrapRescureFunction(router, fn) {
     return function () {
         router.params = {};

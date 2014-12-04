@@ -37,10 +37,10 @@ function compileOptions(vm, trackOptions, ctorOptionsWM) {
 
     options.data = trackData(vm);
     options.methods = trackMethods(vm);
-    options.directives = [];
 
     trackLifecycle(vm, options);
     trackComponents(vm, options, ctorOptions, ctorOptionsWM);
+    trackDirectives(vm, options, ctorOptions);
 
     return options;
 }
@@ -105,18 +105,19 @@ function trackComponents(vm, options, ctorOptions, ctorOptionsWM) {
 
     options.components = {};
 
-    /*jshint -W055 */
     for (var key in ctorOptions.components) {
         if (ctorOptions.components.hasOwnProperty(key)) {
             var componentCtor = ctorOptions.components[key];
-            var sub = new componentCtor();
-            var subOptions = compileOptions(sub, {}, ctorOptionsWM);
 
+            /*jshint -W055 */
+            // A constructor name should start with an uppercase letter.
+            var sub = new componentCtor();
+            /*jshint +W055 */
+
+            var subOptions = compileOptions(sub, {}, ctorOptionsWM);
             copyComponent(options, key, componentCtor, subOptions);
         }
     }
-
-    /*jshint +W055 */
 }
 
 function copyComponent(options, componentName, componentCtor, componentOptions) {
@@ -137,6 +138,30 @@ function copyComponent(options, componentName, componentCtor, componentOptions) 
         };
     }
 }
+
+
+function trackDirectives(vm, options, ctorOptions) {
+    'use strict';
+
+    if (!ctorOptions) return;
+    if (!ctorOptions.directives) return;
+
+    options.directives = {};
+
+    for (var key in ctorOptions.directives) {
+        if (ctorOptions.directives.hasOwnProperty(key)) {
+            var directiveCtor = ctorOptions.directives[key];
+
+            /*jshint -W055 */
+            // A constructor name should start with an uppercase letter.
+            var dir = new directiveCtor();
+            /*jshint +W055 */
+
+            options.directives[key] = dir;
+        }
+    }
+}
+
 
 module.exports = {
     track: track

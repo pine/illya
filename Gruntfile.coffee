@@ -1,4 +1,6 @@
-webpack = require('webpack')
+webpack = require 'webpack'
+JSON5 = require 'json5'
+_ = require 'underscore'
 
 module.exports = (grunt) ->
     webpackBanner = grunt.file.read('webpack.banner.txt')
@@ -18,13 +20,11 @@ module.exports = (grunt) ->
                     ]
         
         typescript:
-            example:
-                src: ['example/**/*.ts']
-                options:
-                    module: 'commonjs'
-                    target: 'es5'
-                    sourceMap: false
-                    declaration: false
+            options:
+                module: 'commonjs'
+                target: 'es5'
+                sourceMap: false
+                declaration: false
         
         uglify:
             options:
@@ -37,10 +37,20 @@ module.exports = (grunt) ->
         jshint:
             main: ['./src/**/*.js']
         
+        tslint:
+            options:
+                configuration:  JSON5.parse(grunt.file.read('./tslint.json'))
+            
+            example:
+                src: ['./example/**/*.ts']
+        
         concurrent:
             options:
                 logConcurrentOutput: true
-            main: ['jshint:main', 'webpack']
+            
+            main: ['jshint:main', 'webpack:main']
+            example: ['tslint:example', 'runTypescriptExample']
+            all: ['concurrent:main', 'concurrent:example']
         
         esteWatch:
             options:
@@ -54,13 +64,31 @@ module.exports = (grunt) ->
                 return []
             
             ts: (filepath) ->
-                return ['webpack'] if filepath.match(/^src\//)
+                # if 'illya.d.ts'
+                if filepath.match(/^src\//)
+                    return ['concurrent:all']
                 
-                grunt.config ['typescript', 'example', 'src'], [filepath]
-                return ['typescript']
+                if filepath.match(/^example\//)
+                    grunt.config ['typescript', 'example', 'src'], [filepath]
+                    return ['typescript']
+                
+                return []
         
     grunt.registerTask 'default', ['concurrent:main']
     grunt.registerTask 'build', ['concurrent:main', 'uglify']
     grunt.registerTask 'watch', ['esteWatch']
+    
+    grunt.registerTask 'runTypescriptExample', ->
+        done = this.async()
+        
+        grunt.file.glob 'example/*', (err, files) ->
+            
+            _.each files, (file) ->
+                matches = file.match(/\/(.*)$/)
+                target = matches[1]
+                grunt.config ['typescript', 'example_' + target, 'src'], [file + '/*.ts']
+                grunt.task.run 'typescript:example_' + target
+            
+            done()
     
     require('load-grunt-tasks')(grunt)

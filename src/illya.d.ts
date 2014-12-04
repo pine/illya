@@ -6,15 +6,29 @@ declare module Illya {
     // Options
     // http://vuejs.org/api/options.html
     interface Options {
-
         // Assets
-        components: { [key: string]: typeof Illya }
+        directives?: { [key: string]: typeof Illya.Directive };
+        components?: { [key: string]: typeof Illya }
     }
 
     export class Directive {
+        el: HTMLElement;
+        vm: Illya;
+        expression: string;
+        arg: string;
+        raw: string;
+        name: string;
+
+        protected isLiteral: boolean;
+        protected toWay: boolean;
+        protected acceptStatement: boolean;
+        protected deep: boolean;
+
+        constructor(update: (value: any) => void);
+
         protected bind(value: any): void;
         protected update(value: any): void;
-        protected unbind();
+        protected unbind(): void;
     }
 
     export class Router extends Illya {

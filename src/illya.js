@@ -11,6 +11,7 @@ var WeakMap = require('es6-weak-map');
 var track = require('./illya/track');
 var utility = require('./illya/utility');
 var router = require('./illya/router');
+var directive = require('./illya/directive');
 
 var CtorOptionsWM = new WeakMap(); // >= IE11
 
@@ -33,6 +34,8 @@ utility.mixin(Illya, Vue);
 utility.mixin(Illya.prototype, Vue.prototype);
 
 Illya.Router = afterExtends(router.Router, Illya);
+Illya.Directive = directive.Directive;
+
 Illya._ = _;
 
 module.exports = Illya;
