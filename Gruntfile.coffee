@@ -54,6 +54,7 @@ module.exports = (grunt) ->
             main: ['jshint:main', 'webpack:main']
             example: ['tslint:example', 'runTypescriptExample']
             exampleWatch: ['tslint:example', 'typescript:example']
+            dtsWatch: ['webpack:main', 'runTypescriptExample']
             all: ['concurrent:main', 'concurrent:example']
         
         clean:
@@ -75,7 +76,7 @@ module.exports = (grunt) ->
             ts: (filepath) ->
                 # if 'illya.d.ts'
                 if filepath.match(/^lib\//)
-                    return ['concurrent:all']
+                    return ['concurrent:dtsWatch']
                 
                 if filepath.match(/^example\//)
                     grunt.config ['typescript', 'example', 'src'], [filepath]

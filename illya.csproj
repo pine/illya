@@ -61,7 +61,7 @@
     <TypeScriptCompile Include="example\directives\app.ts" />
     <TypeScriptCompile Include="example\memo\app.ts" />
     <TypeScriptCompile Include="example\router\app.ts" />
-    <TypeScriptCompile Include="lib\illya.d.ts" />
+    <None Include="lib\illya.d.ts" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

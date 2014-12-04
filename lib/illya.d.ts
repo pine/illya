@@ -8,7 +8,7 @@ declare module Illya {
     interface Options {
         // Assets
         directives?: { [key: string]: typeof Illya.Directive };
-        components?: { [key: string]: typeof Illya }
+        components?: { [key: string]: typeof Illya };
     }
 
     export class Directive {
