@@ -25,6 +25,9 @@ module.exports = (grunt) ->
                 target: 'es5'
                 sourceMap: false
                 declaration: false
+            
+            example:
+                src: []
         
         uglify:
             options:
@@ -50,6 +53,7 @@ module.exports = (grunt) ->
             
             main: ['jshint:main', 'webpack:main']
             example: ['tslint:example', 'runTypescriptExample']
+            exampleWatch: ['tslint:example', 'typescript:example']
             all: ['concurrent:main', 'concurrent:example']
         
         clean:
@@ -75,7 +79,8 @@ module.exports = (grunt) ->
                 
                 if filepath.match(/^example\//)
                     grunt.config ['typescript', 'example', 'src'], [filepath]
-                    return ['typescript']
+                    grunt.config ['tslint', 'example', 'src'], [filepath]
+                    return ['concurrent:exampleWatch']
                 
                 return []
         
