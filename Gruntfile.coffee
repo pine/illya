@@ -9,7 +9,7 @@ module.exports = (grunt) ->
         pkg: grunt.file.readJSON 'package.json'
         webpack:
             main:
-                entry: './src/illya.js'
+                entry: './lib/illya.js'
                 output:
                     path: './dist/'
                     filename: 'illya.js'
@@ -35,7 +35,7 @@ module.exports = (grunt) ->
                     './dist/illya.min.js': './dist/illya.js'
         
         jshint:
-            main: ['./src/**/*.js']
+            main: ['./lib/**/*.js']
         
         tslint:
             options:
@@ -52,12 +52,17 @@ module.exports = (grunt) ->
             example: ['tslint:example', 'runTypescriptExample']
             all: ['concurrent:main', 'concurrent:example']
         
+        clean:
+            grunt: ['Gruntfile.js*', 'Gruntfile.min*']
+            vs: ['./bin', './obj']
+            dist: ['./dist']
+        
         esteWatch:
             options:
-                dirs: ['src/**/', 'example/**/']
+                dirs: ['lib/**/', 'example/**/']
                 livereload: false
             js: (filepath) ->
-                if filepath.match(/^src\//)
+                if filepath.match(/^lib\//)
                     grunt.config ['jshint', 'main'], [filepath]
                     return ['concurrent:main']
                 
@@ -65,7 +70,7 @@ module.exports = (grunt) ->
             
             ts: (filepath) ->
                 # if 'illya.d.ts'
-                if filepath.match(/^src\//)
+                if filepath.match(/^lib\//)
                     return ['concurrent:all']
                 
                 if filepath.match(/^example\//)
@@ -74,15 +79,14 @@ module.exports = (grunt) ->
                 
                 return []
         
-    grunt.registerTask 'default', ['concurrent:main']
-    grunt.registerTask 'build', ['concurrent:main', 'uglify']
+    grunt.registerTask 'default', ['clean', 'concurrent:main']
+    grunt.registerTask 'build', ['clean', 'concurrent:all', 'uglify']
     grunt.registerTask 'watch', ['esteWatch']
     
     grunt.registerTask 'runTypescriptExample', ->
         done = this.async()
         
         grunt.file.glob 'example/*', (err, files) ->
-            
             _.each files, (file) ->
                 matches = file.match(/\/(.*)$/)
                 target = matches[1]

@@ -7,3 +7,10 @@ Gruntfile.min.js
 Gruntfile.min.js.map
 
 typings
+
+# Visual Studio
+*.suo
+*.csproj.user
+
+bin
+obj

@@ -1,5 +1,5 @@
 /// <reference path="../../typings/jquery/jquery.d.ts" />
-/// <reference path="../../src/illya.d.ts" />
+/// <reference path="../../lib/illya.d.ts" />
 
 class App extends Illya {
     memos: string[] = [];
