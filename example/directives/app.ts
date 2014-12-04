@@ -1,21 +1,19 @@
 /// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../lib/illya.d.ts" />
 
-class TestDirective extends Illya.Directive {
+class FooDirective extends Illya.Directive {
     protected update(value: string) {
-        console.log(value);
-        console.log(this);
+        $(this.el).text('v-foo: ' + value);
     }
-
 }
 
 class App extends Illya {
-    test = "foobar";
+    foo = 'foo';
 
     constructor() {
         super({
             directives: {
-                test: TestDirective
+                foo: FooDirective
             }
         });
     }
