@@ -10,6 +10,8 @@ class TestDirective extends Illya.Directive {
 }
 
 class App extends Illya {
+    test = "foobar";
+
     constructor() {
         super({
             directives: {

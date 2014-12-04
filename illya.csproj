@@ -19,8 +19,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="example\.gitignore" />
+    <Content Include="example\components\app.html" />
+    <Content Include="example\data-binding-jquery\app.html" />
+    <Content Include="example\directives\app.html" />
+    <Content Include="example\memo\app.html" />
+    <Content Include="example\router\app.html" />
     <Content Include="Gruntfile.js">
       <DependentUpon>Gruntfile.coffee</DependentUpon>
+    </Content>
+    <Content Include="Gruntfile.min.js">
+      <DependentUpon>Gruntfile.js</DependentUpon>
     </Content>
     <Content Include="lib\illya.js" />
     <Content Include="lib\illya\directive.js" />
@@ -35,6 +43,11 @@
     <Content Include="Gruntfile.js.map">
       <DependentUpon>Gruntfile.js</DependentUpon>
     </Content>
+    <Content Include="Gruntfile.min.js.map">
+      <DependentUpon>Gruntfile.min.js</DependentUpon>
+    </Content>
+    <Content Include="package.json" />
+    <Content Include=".travis.yml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -43,6 +56,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="example\components\app.ts" />
+    <TypeScriptCompile Include="example\data-binding-jquery\app.ts" />
+    <TypeScriptCompile Include="example\directives\app.ts" />
+    <TypeScriptCompile Include="example\memo\app.ts" />
+    <TypeScriptCompile Include="example\router\app.ts" />
     <TypeScriptCompile Include="lib\illya.d.ts" />
   </ItemGroup>
   <ItemGroup />
@@ -70,6 +88,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties package_1json__JSONSchema="" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
