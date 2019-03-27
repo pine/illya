@@ -1,6 +1,6 @@
 illya.js
 --------
-[![Build Status](https://travis-ci.org/pine613/illya.svg?branch=master)](https://travis-ci.org/pine613/illya)
+[![Build Status](https://travis-ci.org/pine613/illya.svg?branch=master)](https://travis-ci.org/pine613/illya) [![Greenkeeper badge](https://badges.greenkeeper.io/pine/illya.svg)](https://greenkeeper.io/)
 
 This project is pre-alpha phase.
 illya.js is based on [Vue.js](https://github.com/yyx990803/vue).
