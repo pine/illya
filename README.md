@@ -1,3 +1,9 @@
+# DEPRECATED
+
+:warning: This package is no longer maintained.
+
+-----
+
 illya.js
 --------
 [![Build Status](https://travis-ci.org/pine613/illya.svg?branch=master)](https://travis-ci.org/pine613/illya)
